@@ -51,6 +51,7 @@ double grsds(float v)
 }//计算个人所得税
 void write()
 {
+
   //cout<<n<<endl;
 	int j=n;
   if(j>0&&j<50)
@@ -120,7 +121,7 @@ void modify()
 }//修改
 void add()
 {
-	cout<<n<<endl;
+	
 	if(n>50)
 	{
 	  cout<<"记录空间已满！！"<<endl;
@@ -160,9 +161,10 @@ void add()
 	   cout<<"个人所得税 "<<zggz[n].tax<<endl;
 	   cout<<"实发工资 "<<zggz[n].realz<<endl;
 	}//输出输入的信息
+
 	n++;//每次增加人数1
-	getchar();
-	//write();//保存
+	
+	//write();保存
 }//增加
 void del()
 {
@@ -181,7 +183,7 @@ void del()
    }
    else
    {
-      cout<<"是否确定删除?输入1确认，退出请输入其他字符"<<endl;
+      cout<<"是否确定删除?=====输入1确认，退出请输入其他字符======"<<endl;
 	  cin>>c2;
 	  if(c2=='1')
 	  {
@@ -196,7 +198,7 @@ void del()
 		     n--;//数组末尾删除，记得保存
 	  }
 	  else
-		  cout<<"即将退出"<<endl;
+	  {cout<<"即将退出"<<endl;}
    }
 	   
    //write();
@@ -290,7 +292,7 @@ void read()
 	   exit(1);
 	}
 	//cout<<n<<endl;
-	while(!inf.eof())
+	while(inf)
 	{
 		inf>>zggz[n].num;
 		inf>>zggz[n].name;
@@ -301,10 +303,11 @@ void read()
 		inf>>zggz[n].shouldz;
 		inf>>zggz[n].tax;
 		inf>>zggz[n].realz;
-	  n++;//最后值为人数，也就是结构体数组的大小
+	  n++;//最后值为人数多1
 	
 	}//读取文件赋值给结构体数组
 	inf.close();//关闭文件
+	n--;
 	cout<<"#########目前人数为 ########"<<n<<endl;
 	cout<<endl;
 	cout<<endl;
