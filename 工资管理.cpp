@@ -44,22 +44,33 @@ double grsds(float v)
 									if(v>100000)
 									{c=v*0.45;return c;}
 									else
-										if(v<=0)
+										if(v<0)
 	                                      return 0;
 	return 0;
 }//计算个人所得税
 void write()
 {
-  int j=n;
-  if(j>0)
+  //cout<<n<<endl;
+	int j=n;
+  if(j>0&&j<50)
      {
-		 ofstream outf("gx.dat");
+		 ofstream outf("gx.dat",ios::out);
 		 if(!outf)
 		 {
 			 cout<<"无法打开文件"<<endl;
 		 }
 		 for(int i=0;i<n;i++)
-			 outf.write((char*)&zggz[i],sizeof(zggz[i]));
+		 {
+		       outf<<zggz[i].num<<" ";
+		       outf<<zggz[i].name<<" ";
+		       outf<<zggz[i].jobz<<" ";
+		       outf<<zggz[i].agesz<<" ";
+		       outf<<zggz[i].dutyz<<" ";
+		       outf<<zggz[i].perz<<" ";
+		       outf<<zggz[i].shouldz<<" ";
+		       outf<<zggz[i].tax<<" ";
+		       outf<<zggz[i].realz<<endl;
+		  }
 		     outf.close();
       }//重新全部录入文件
   else
@@ -68,6 +79,7 @@ void write()
 }//保存
 void modify()
 {
+	cout<<n<<endl;
 	char gonghao[10];
    int i=0,j=101;
    cout<<"请输入要修改的工号"<<endl;
@@ -103,11 +115,18 @@ void modify()
 	zggz[j].realz=zggz[j].shouldz-zggz[j].tax;//计算应发工资
 
    }
-   write();//保存
+   //write();//保存
 }//修改
 void add()
 {
-	n++;
+	cout<<n<<endl;
+	if(n>50)
+	{
+	  cout<<"记录空间已满！！"<<endl;
+	}
+	else
+	{
+	cout<<n<<endl;
 	cout<<"请输入全部信息 "<<endl;
 	cout<<"工号 "<<endl;
 	cin>>zggz[n].num;
@@ -127,10 +146,26 @@ void add()
 	zggz[n].tax=grsds(zggz[n].shouldz);//计算所得税
 	
 	zggz[n].realz=zggz[n].shouldz-zggz[n].tax;//计算实发工资
-	write();//保存
+
+	cout<<"以下为您所输入的信息 "<<endl;
+	
+	cout<<"工号 "<<zggz[n].num<<endl;
+	   cout<<"姓名 "<<zggz[n].name<<endl;
+	   cout<<"岗位工资 "<<zggz[n].jobz<<endl;
+	   cout<<"薪级工资 "<<zggz[n].agesz<<endl;
+	   cout<<"职务津贴 "<<zggz[n].dutyz<<endl;
+	   cout<<"绩效工资 "<<zggz[n].perz<<endl;
+	   cout<<"应发工资 "<<zggz[n].shouldz<<endl;
+	   cout<<"个人所得税 "<<zggz[n].tax<<endl;
+	   cout<<"实发工资 "<<zggz[n].realz<<endl;
+	}//输出输入的信息
+	n++;//每次增加人数1
+	getchar();
+	//write();//保存
 }//增加
 void del()
 {
+	//cout<<n<<endl;
 	char gonghao[10],c2;
    int i=0,j=101;
    cout<<"请输入要删除的工号"<<endl;
@@ -138,6 +173,7 @@ void del()
    for(;i<n;i++)
 	   if(strcmp(gonghao,zggz[i].num)==0)
 		   j=i;
+   cout<<"目前的下标为 "<<j<<endl;
    if(j==101)
    {
       cout<<"查无此人，请再次确认工号是否正确"<<endl;
@@ -148,16 +184,24 @@ void del()
 	  cin>>c2;
 	  if(c2=='1')
 	  {
-	     int k=j+1;
-		 for(;j<n-1;j++,k++)
-			 zggz[j]=zggz[k];//依次后一记录的获值	
-		 //zggz[n]={'0','0',0,0,0,0,0,0,0};//数组末尾清零
+	     if(j!=(n-1))
+		 {
+			 for(int k=j+1;j<n&&k<n;j++,k++)
+			         zggz[j]=zggz[k];//依次后一记录的获值
+
+			 n--;//人数减少一个
+		 }
+		 else
+		     n--;//数组末尾删除，记得保存
 	  }
+	  else
+		  cout<<"即将退出"<<endl;
    }
-   write();
+	   
+   //write();
 }//删除
 void find()
-{
+{ cout<<n<<endl;
    char gonghao[10];
    int i=0,j=101;
    cout<<"请输入要查询的工号"<<endl;
@@ -187,6 +231,7 @@ void find()
 }//查询
 void list()
 {
+	//cout<<n<<endl;
   cout<<"下面为全体职工的信息"<<endl;
   for(int i=0;i<n;i++)
   {
@@ -237,13 +282,14 @@ void menu()
 }
 void read()
 {
-	ifstream inf("gx.dat");
+	ifstream inf("gx.dat",ios::in|ios::binary);
 	if(!inf)
 	{
 	   cout<<"无法打开！！！gx.dat文件！！"<<endl;
 	   exit(1);
 	}
-	while(inf)
+	//cout<<n<<endl;
+	while(!inf.eof())
 	{
 		inf>>zggz[n].num;
 		inf>>zggz[n].name;
@@ -254,11 +300,13 @@ void read()
 		inf>>zggz[n].shouldz;
 		inf>>zggz[n].tax;
 		inf>>zggz[n].realz;
-	  n++;//比实际人数多1
+	  n++;//最后值为人数，也就是结构体数组的大小
 	
 	}//读取文件赋值给结构体数组
 	inf.close();//关闭文件
-	
+	cout<<"#########目前人数为 ########"<<n<<endl;
+	cout<<endl;
+	cout<<endl;
 	while(1)
 	{
 	//	system("cls");//清屏
