@@ -98,37 +98,37 @@ double grsds(float v)
 				else
 					if (v > 5000 && v <= 20000)
 					{
-					  ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+					    ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-					  return ctax;
+					    return ctax;
 					}
 					else
 						if (v > 20000 && v <= 40000)
 						{
-						  ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+						    ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-						  return ctax;
+						    return ctax;
 						}
 						else
 							if (v > 40000 && v <= 60000)
 							{
-							  ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+							    ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-							  return ctax;
+							    return ctax;
 							}
 							else
 								if (v > 60000 && v <= 80000)
 								{
-								   ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+								     ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-								   return ctax;
+								     return ctax;
 								}
 								else
 									if (v > 80000 && v <= 100000)
 									{
-									   ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+									     ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-									   return ctax;
+									     return ctax;
 									}
 									else
 										if (v > 100000)
@@ -155,7 +155,7 @@ double grsds(float v)
 *************************************************/ 
 void write()
 {
-	//cout<<n<<endl;
+	cout<<"目前人数为 "<<n<<endl;
 	int j = n;
 
     if (j > 0 && j < 50)
@@ -166,7 +166,7 @@ void write()
 		 {
 			 cout<<"无法打开文件"<<endl;
 		 }
-
+		 
 		 for (int i=0;i<n;i++)
 		 {
 		       outf << zggz[i].num<<" ";
@@ -183,8 +183,31 @@ void write()
 		  outf.close();
 
       }          //  重新全部录入文件
+
   else
-	  cout<<"无记录,将退出"<<endl;
+	  if(j==0)
+	  {
+		      ofstream outf("gx.dat", ios::out);
+
+		      if(!outf)
+		      {
+			       cout<<"无法打开文件"<<endl;
+		      }
+
+	           outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << " ";
+		       outf << endl;
+	  
+	  }
+	  else
+               cout<<"无记录,将退出"<<endl;
+	  
 
 }
 
@@ -207,17 +230,17 @@ void modify()
 
     int i = 0,j = 101;
 
-   cout<<"请输入要修改的工号"<<endl;
+    cout<<"请输入要修改的工号"<<endl;
 
-   cin >> gonghao;
+    cin >> gonghao;
 
-   for (;i < n; i++)
-   {
-	   if(strcmp(gonghao,zggz[i].num) == 0)
+    for (;i < n; i++)
+    {
+	   if (strcmp(gonghao,zggz[i].num) == 0)
 	   {
 		   j = i;
 	   }
-   }
+    }
               //按照工号依次查找
    if (j == 101)
    {
@@ -245,10 +268,10 @@ void modify()
 	
 	   zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
 
-   }
+   
 
-   cout<<"以下是您所修改的信息 "<<endl;
-   cout<<"工号 "<<endl;
+       cout<<"以下是您所修改的信息 "<<endl;
+       cout<<"工号 "<<endl;
 	   cout<<zggz[j].num;
 	   cout<<"姓名 "<<endl;
 	   cout<<zggz[j].name;
@@ -260,6 +283,7 @@ void modify()
 	   cout<<zggz[j].dutyz;
 	   cout<<"绩效工资 "<<endl;
 	   cout<<zggz[j].perz;
+   }
 
    int s;
 
@@ -344,7 +368,18 @@ void add()
 	
 }
 
-/*################删除函数##########################*/
+/*************************************************
+ Function: del();
+ Description: 删除对应目标的人员
+ Calls: write()保存函数
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义gonghao字符数组记录目标工号值,定义's'实现是否确定保存的功能,定义j,k记录下标值
+ Output: 无
+ Return: 无返回值
+ Others: 该函数实现方法为,通过循坏语句找到相应目标人员下标j,后进行从j开始,前一个获取后一个数据,循环条件为:j<n&&k<n;
+*************************************************/ 
 void del()
 {
 	//cout<<n<<endl;
@@ -408,7 +443,17 @@ void del()
 		    }
 }
 
-/*###############查询函数###########################*/
+/*************************************************
+ Function: find();
+ Description: 查询并显示目标人员信息
+ Calls: 无 
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义gonghao字符数组记录目标工号值,并通过循环语句找到目标后进行输出
+ Output: 无
+ Return: 无返回值
+*************************************************/ 
 void find()
 { 
 	//cout<<n<<endl;
@@ -449,7 +494,17 @@ void find()
 	
 }
 
-/*###############浏览函数###########################*/
+/*************************************************
+ Function: list();
+ Description: 显示全部信息
+ Calls: 无 
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 无
+ Output: 无
+ Return: 无返回值
+*************************************************/ 
 void list()
 {
 	//cout<<n<<endl;
@@ -457,20 +512,34 @@ void list()
 
     for(int i=0;i<n;i++)
       {
-           cout<<"工号 "<<zggz[i].num<<endl;
-	       cout<<"姓名 "<<zggz[i].name<<endl;
-	       cout<<"岗位工资 "<<zggz[i].jobz<<endl;
-	       cout<<"薪级工资 "<<zggz[i].agesz<<endl;
-	       cout<<"职务津贴 "<<zggz[i].dutyz<<endl;
-	       cout<<"绩效工资 "<<zggz[i].perz<<endl;
-	       cout<<"应发工资 "<<zggz[i].shouldz<<endl;
-	       cout<<"个人所得税 "<<zggz[i].tax<<endl;
-	       cout<<"实发工资 "<<zggz[i].realz<<endl;
+		   cout<<"-----------------------------------------------------------------"<<endl;
+
+           cout<<" 工号 "<<" 姓名 "<<" 岗位工资 "<<" 薪级工资 "<<" 职务津贴 "<<endl;
+
+		   cout<<" "<<zggz[i].num<<" "<<" "<<zggz[i].name<<" "<<" "<<zggz[i].jobz<<" "<<"        "<<zggz[i].agesz<<" "<<"   "<<zggz[i].dutyz<<" "<<endl;
+
+	       cout<<endl;
+
+	       cout<<" 绩效工资 "<<" 应发工资 "<<" 个人所得税 "<<" 实发工资 "<<endl;
+
+		   cout<<" "<<zggz[i].perz<<"         "<<" "<<zggz[i].shouldz<<" "<<"   "<<zggz[i].tax<<" "<<"         "<<zggz[i].realz<<" "<<" "<<endl;
+			
+		   cout<<"-----------------------------------------------------------------"<<endl;
       }
   
 }
 
-/*###############菜单###############################*/
+/*************************************************
+ Function: menu();
+ Description: 显示功能信息代码,并通过switch选择执行对应语句
+ Calls: 无 
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义c1获取用户输入的值,通过switch执行对应函数
+ Output: 无
+ Return: 无返回值
+*************************************************/ 
 void menu()
 {
 	cout<<"《--------请根据以下的提示序号输入您所需的功能---------》》"<<endl;
@@ -510,7 +579,17 @@ void menu()
   }
 
 }
-/*###############起始文件###########################*/
+/*************************************************
+ Function: read();
+ Description: 本函数将文件"gx.dat"里面数据全部写进数组zggz,此函数采用C++格式进行文件的读取
+ Calls: 无
+ Called By:无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义一个ifstream "inf"进行文件的读取
+ Output: 无
+ Return: 无返回值
+*************************************************/ 
 void read()
 {
 	ifstream inf("gx.dat",ios::in|ios::binary);
@@ -544,14 +623,15 @@ void read()
 
 	n--;
 
-	cout<<"#########目前人数为 ########"<<n<<endl;
+	cout<<endl;
+	cout<<"#########目前人数为 "<<n<<"###########"<<endl;
 
 	cout<<endl;
 	cout<<endl;
 
 	while(1)
 	{
-	            //	system("cls");//清屏
+	            
 		cout<<"<<=====输入1进入菜单=====>>"<<endl;
 		cout<<"<<=====输入0退出=========>>"<<endl;
 
