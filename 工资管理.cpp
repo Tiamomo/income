@@ -1,7 +1,7 @@
 ﻿/*************************************************
-Copyright (C), 2018, Mango Tech. Co., Ltd.
+Copyright (C++), 2018, Mango Tech. Co., Ltd.
  文件名: 工资管理.cpp
- Author:蒙世满 Version:C++ Date:22,6,2018 
+ Author:蒙世满(117583010128) Version:C++ Date:22,6,2018 
  Description: 
 
  I. 主要功能:
@@ -24,8 +24,8 @@ Copyright (C), 2018, Mango Tech. Co., Ltd.
    5.职务津贴	单精度实型	由职务或职称确定的工资
    6.绩效工资	单精度实型	由业绩确定的工资
    7应发工资	单精度实型	前4项工资之和
-   8.个人所得税	单精度实型	按照一定的比例计算
-   9.实发工资	单精度实型	应发工资－个人所得税
+   8.个人所得税	双精度实型	按照一定的比例计算
+   9.实发工资	双精度实型	应发工资－个人所得税
 *************************************************/
 
 #include<iostream>
@@ -57,85 +57,102 @@ struct emploees
 
 int n=0;   // 全局变量,记录人员数
 
-/*
-计算个人所得税
-*/
+/*************************************************
+ Function: grsds();
+ Description: 计算个人所得税并返回到调用处
+ Calls: 无
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 此函数从调用处获取值 "zggz[i].shouldz" 并赋值给形参 (float类型) ' v ',并定义参数 (double类型) ' ctax '保存最后计算的个人所得税 
+ Output: 无输出
+ Return: 返回值类型为double类型的"ctax".
+ Others: 本函数对于负数的值,将直接返回0值;
+*************************************************/ 
 double grsds(float v)
 {   
-	double c;
+	double ctax;
 
-    v = v - 3500;    // 减去免征税
+    if (v > 0)
+	{
+		if(v > 0 && v <= 500)
+		{
+		    ctax = v * 0.05;
 
-	if (v <= 500 && v >= 0)
-	    {
-			c = v * 0.05;
-
-			return c;
-	    }
-	else
-		if (v > 500 && v <= 2000)
-		    {
-				c = v * 0.1;
-
-				return c;
-		    }
+			return ctax;
+		}
 		else
-			if (v > 2000 && v <= 5000)
-			    {
-					c = v * 0.15;
+			if ( v > 500 && v <= 2000)
+			{
+                ctax = (v-500) * 0.1 + 500 * 0.05;
 
-					return c;
-			    }
+			    return ctax;
+			}
 			else
-				if (v > 5000 && v <= 20000)
-				    {
-						c = v* 0.2;
+				if (v > 2000 && v <= 5000)
+				{
+				    ctax = (v-2000) * 0.15 + 1500 * 0.1+ 500 * 0.05;
 
-						return c;
-				    }
+				    return ctax;
+				}
 				else
-					if (v > 20000 && v <= 40000)
-					    {
-							c = v * 0.25;
+					if (v > 5000 && v <= 20000)
+					{
+					  ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-							return c;
-					    }
+					  return ctax;
+					}
 					else
-						if (v > 40000 && v <= 60000)
-						    {
-								c = v * 0.3;
+						if (v > 20000 && v <= 40000)
+						{
+						  ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-								return c;
-						    }
+						  return ctax;
+						}
 						else
-							if (v > 60000 && v <= 80000)
-							    {
-									c=v*0.35;
+							if (v > 40000 && v <= 60000)
+							{
+							  ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-									return c;
-							    }
-							else 
-								if (v > 80000 && v <= 100000)
-								    {
-										c = v * 0.4;
-										
-										return c;
-								    }
+							  return ctax;
+							}
+							else
+								if (v > 60000 && v <= 80000)
+								{
+								   ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+
+								   return ctax;
+								}
 								else
-									if (v > 100000)
-									    {
-											c = v * 0.45;
+									if (v > 80000 && v <= 100000)
+									{
+									   ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-											return c;
-									    }
+									   return ctax;
+									}
 									else
-										if (v<0)
+										if (v > 100000)
+										{
+											ctax = (v-100000) * 0.45 + 20000 * 0.4 + 20000 * 0.35 + 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-	                                      return 0;
-	return 0;
+											return ctax;
+										}
+	}
+	else
+		return 0;
 }
 
-/*###############保存函数###########################*/
+/*************************************************
+ Function: write();
+ Description: 本函数将数组zggz全部写进文件"gx.dat"里面,此函数采用C++格式进行文件的写入
+ Calls: 无
+ Called By:无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 本函数定义一个整型'j'记录全局变量'n'的值,定义一个ofstream "outf"进行文件的写入
+ Output: 无
+ Return: 无返回值
+*************************************************/ 
 void write()
 {
 	//cout<<n<<endl;
@@ -171,7 +188,18 @@ void write()
 
 }
 
-/*###############修改函数###########################*/
+/*************************************************
+ Function: modify();
+ Description: 检索并匹配到工号对应的结构体进行修改并实现保存
+ Calls: 调用了write()保存函数
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义'i','j'进行循环的检索并记录目标的位置,定义's'实现是否确定保存的功能
+ Output: 无
+ Return: 无
+ Others: 该函数将会提示您所修改的信息
+*************************************************/ 
 void modify()
 {
 	//cout<<n<<endl;
@@ -218,6 +246,21 @@ void modify()
 	   zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
 
    }
+
+   cout<<"以下是您所修改的信息 "<<endl;
+   cout<<"工号 "<<endl;
+	   cout<<zggz[j].num;
+	   cout<<"姓名 "<<endl;
+	   cout<<zggz[j].name;
+	   cout<<"岗位工资 "<<endl;
+	   cout<<zggz[j].jobz;
+	   cout<<"薪级工资 "<<endl;
+	   cout<<zggz[j].agesz;
+	   cout<<"职务津贴 "<<endl;
+	   cout<<zggz[j].dutyz;
+	   cout<<"绩效工资 "<<endl;
+	   cout<<zggz[j].perz;
+
    int s;
 
 		cout<<"确认是否保存? 1:是; 0:否 "<<endl;
@@ -232,7 +275,18 @@ void modify()
    
 }
 
-/*###############增加函数###########################*/
+/*************************************************
+ Function: add()
+ Description: 增加记录信息
+ Calls: write()保存函数
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义's'实现是否确定保存的功能
+ Output: 无
+ Return: 无返回值
+ Others: 该函数将显示您所填的信息
+*************************************************/ 
 void add()
 {
 	
