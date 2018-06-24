@@ -160,7 +160,7 @@ void write()
 
     if (j > 0 && j < 50)
 	{
-		 ofstream outf("gx.dat", ios::out);
+		 ofstream outf ("gx.dat", ios::out);
 
 		 if(!outf)
 		 {
@@ -187,9 +187,9 @@ void write()
   else
 	  if(j==0)
 	  {
-		      ofstream outf("gx.dat", ios::out);
+		      ofstream outf ("gx.dat", ios::out);
 
-		      if(!outf)
+		      if ( !outf )
 		      {
 			       cout<<"无法打开文件"<<endl;
 		      }
@@ -203,7 +203,7 @@ void write()
 		       outf << " ";
 		       outf << " ";
 		       outf << endl;
-	  
+
 	  }
 	  else
                cout<<"无记录,将退出"<<endl;
