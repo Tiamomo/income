@@ -257,7 +257,7 @@ node *read()
 
     k=s.st_size/len;
 	
-	if ((fp = fopen ("gx.dat","wb+")) == NULL)
+	if ((fp = fopen ("gx.dat","rb+")) == NULL)
 	{
 	    printf("打开文件失败！\n");
 
@@ -299,7 +299,12 @@ node *read()
 
 	   prev->next=cur;
 
-	   fread(cur,len,1,fp);
+	   while (!fp)
+	   {
+	       fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",cur->num,cur->name,&cur->jobz,&cur->agesz,&cur->dutyz,&cur->perz,&cur->shouldz,&cur->tax,&cur->realz);//将数据存入双向链表
+
+           cur=cur->next;
+	   }
 
 	   cur->prev=prev;
 
@@ -348,14 +353,14 @@ void write(node *head)
     else
 	    printf("打开成功！！ \n");
 
-   
-   while(cur5!=head)
-   {
-      fwrite(cur5, len,1,fp);
+	while(cur5!=head)
+		 {
+		       fprintf(fp,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",cur5->num,cur5->name,cur5->jobz,cur5->agesz,cur5->dutyz,cur5->perz,cur5->shouldz,cur5->tax,cur5->realz);//讲双向链表写入文件
 
-	  cur5=cur5->next;
-   }
+	           fprintf(fp,"\n");
 
+			   cur5=cur5->next;
+		  }
    printf("保存成功  ！！！\n");
 
    fclose(fp);        //文件关闭
