@@ -54,10 +54,14 @@ typedef struct emp
 
 	struct emp *next; //右结点
 
-}node,zggz[50];
+}node;
+
+node zggz[50];
 
 unsigned int len = sizeof(node);//记录结构体的长度
+
 int k=0;//全局变量，进行文件读取时个数的记录
+
 /*************************************************
  Function: grsds();
  Description: 计算个人所得税并返回到调用处
@@ -245,30 +249,29 @@ node* create(int n)
 *************************************************/
 node *read()
 {
-    node *head,*cur,*prev;	
-
-	FILE *fp;
-
-	int n;
-
-	struct stat s;
-
-	stat("gx.dat",&s);
-
-    k=s.st_size/len;
-	//printf("当前文件字节数%d   结构体大小%d ",k,len);
+    FILE *fp;
+    int i;
+	node *head,*cur,*prev;
+	
 	if ((fp = fopen ("gx.dat","rb+")) == NULL)
 	{
-	    printf("打开文件失败！\n");
+	   printf("打开文件失败！\n");
 
-	    getch();
+	   getch();
 
-	    exit(-1);
+	   exit(-1);
 	}
     else
-	    printf("打开成功！！ \n");
+	    printf("成功！！ \n");
 
-    if ((head = (node *)malloc(len))==NULL)
+	while (!feof(fp))
+	{
+	   fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[k].num,zggz[k].name,&zggz[k].jobz,&zggz[k].agesz,&zggz[k].dutyz,&zggz[k].perz,&zggz[k].shouldz,&zggz[k].tax,&zggz[k].realz);//将数据存入数组 
+
+	   k++;//记录人数
+	}
+
+	if ((head = (node *)malloc(len))==NULL)
 	{
         printf("获取空间失败！！请重试！\n");
 	    exit(-1);
@@ -288,7 +291,7 @@ node *read()
 
    prev = head;
 
-  for(n = 1;n <= k; n++)
+  for(i = 0;i < k; i++)
   {
        if ((cur = (node *)malloc(len))==NULL)
 	   {
@@ -299,25 +302,37 @@ node *read()
 
 	   prev->next=cur;
 
-	   fread(cur,len,1,fp);//将数据存入双向链表
+	   strcpy(cur->num,zggz[i].num);
+	   strcpy(cur->name,zggz[i].name);
+	   cur->jobz=zggz[i].jobz;
+	   cur->agesz=zggz[i].agesz;
+	   cur->dutyz=zggz[i].dutyz;
+	   cur->perz=zggz[i].perz;
+	   cur->shouldz=zggz[i].shouldz;
+	   cur->tax=zggz[i].shouldz;
+	   cur->realz=zggz[i].realz;
        
-       cur=cur->next;
-
+       //cur=cur->next;
+       
 	   cur->prev=prev;
 
 	   cur->next=NULL;
 
 	   prev=cur;
-  
+	   
+	  // printf("工号 %s",cur->num);
   }
 
-  prev->next=head;
+    prev->next=head;
 
-  head->prev=cur;
+    head->prev=cur;
 
-  fclose(fp);      //文件关闭
+    printf("目前人数为%d\n",k);
 
-  return head;
+	fclose(fp);//关闭文件
+
+	return head;
+ 
 
 }
 /*************************************************
@@ -750,11 +765,11 @@ int main()
            switch(c1)
 		   {
                case 1:
-	             find(head,n);//查询
+	             find(head,k);//查询
 	             break;
 
               case 2:
-	             modify(head,n); //修改
+	             modify(head,k); //修改
 	             break;
 
               case 3:
@@ -762,7 +777,7 @@ int main()
 	             break;
 
               case 4:
-	             del(head,n);	   //删除
+	             del(head,k);	   //删除
 	             break;
 
               case 5:
