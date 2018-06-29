@@ -54,7 +54,7 @@ typedef struct emp
 
 	struct emp *next; //右结点
 
-}node;
+}node,zggz[50];
 
 unsigned int len = sizeof(node);//记录结构体的长度
 int k=0;//全局变量，进行文件读取时个数的记录
@@ -256,7 +256,7 @@ node *read()
 	stat("gx.dat",&s);
 
     k=s.st_size/len;
-	
+	//printf("当前文件字节数%d   结构体大小%d ",k,len);
 	if ((fp = fopen ("gx.dat","rb+")) == NULL)
 	{
 	    printf("打开文件失败！\n");
@@ -299,12 +299,9 @@ node *read()
 
 	   prev->next=cur;
 
-	   while (!fp)
-	   {
-	       fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",cur->num,cur->name,&cur->jobz,&cur->agesz,&cur->dutyz,&cur->perz,&cur->shouldz,&cur->tax,&cur->realz);//将数据存入双向链表
-
-           cur=cur->next;
-	   }
+	   fread(cur,len,1,fp);//将数据存入双向链表
+       
+       cur=cur->next;
 
 	   cur->prev=prev;
 
@@ -360,6 +357,7 @@ void write(node *head)
 	           fprintf(fp,"\n");
 
 			   cur5=cur5->next;
+
 		  }
    printf("保存成功  ！！！\n");
 
@@ -744,7 +742,7 @@ int main()
 		{
 		   printf("        《--------请根据以下的提示序号输入您所需的功能---------》》        \n");
            printf("        《--------1为查询，2为修改，3为添加，4为删除-----------》》        \n");
-           printf("        《--------5为保存，6为浏览，7为退出并返回上级-----------》》       \n");
+           printf("        《--------5为保存，6为浏览，7为退出-----------》》       \n");
            printf("\n");
 
            scanf("%d",&c1);
@@ -786,8 +784,9 @@ int main()
 	      
 	else
 	{
-		head=read();
-			while(1)
+		head=read();//获取链表
+
+		while(1)
 		{
 		   printf("        《--------请根据以下的提示序号输入您所需的功能---------》》        \n");
            printf("        《--------1为查询，2为修改，3为添加，4为删除-----------》》        \n");
