@@ -74,14 +74,14 @@ double grsds(float v)
 	{
 		if(v > 0 && v <= 500)
 		{
-		    ctax = v * 0.05;
+			ctax = v * 0.05;
 
 			return ctax;
 		}
 		else
 			if ( v > 500 && v <= 2000)
 			{
-                ctax = (v-500) * 0.1 + 500 * 0.05;
+		            ctax = (v-500) * 0.1 + 500 * 0.05;
 
 			    return ctax;
 			}
@@ -173,8 +173,8 @@ void write()
 		 
 		 for (int i=0;i<n;i++)
 		 {
-		       fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件 
-	           fprintf(fp2,"\n");
+			   fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件
+			   fprintf(fp2,"\n");
 		  }
 		  printf("保存完成！\n");
 
@@ -200,11 +200,11 @@ void write()
 	           {
 				   printf("打开成功！！正在保存\n");
 
-				   fprintf(fp2,"%s %s %s %s %s %s %s %s %s"," "," "," "," "," "," "," "," "," "); 
+				   fprintf(fp2,"%s %s %s %s %s %s %s %s %s"," "," "," "," "," "," "," "," "," ");
+				   
+				   fprintf(fp2,"\n");
 
-	               fprintf(fp2,"\n");
-
-				    printf("保存完成！\n");
+				   printf("保存完成！\n");
 
 				   fclose(fp2);//关闭文件
 			   }
@@ -309,51 +309,46 @@ void modify()
    
     else
      {
-	     printf("==========请重新录入基本信息=========\n");
+	         printf("==========请重新录入基本信息=========\n");
 
-	     printf("工号:\n");
-	     scanf("%s",zggz[j].num);
+	         printf("工号:\n");
+	         scanf("%s",zggz[j].num);
 
-	     printf("姓名:\n");
-	     scanf("%s",zggz[j].name);
+	         printf("姓名:\n");
+	         scanf("%s",zggz[j].name);
 	   
-	     printf("岗位工资:\n");
-	     scanf("%f",&zggz[j].jobz);
+	         printf("岗位工资:\n");
+	         scanf("%f",&zggz[j].jobz);
 
-	     printf("薪级工资:\n");
-	     scanf("%f",&zggz[j].agesz);
+	         printf("薪级工资:\n");
+	         scanf("%f",&zggz[j].agesz);
 	   
-	     printf("职务津贴:\n");
-	     scanf("%f",&zggz[j].dutyz);
+	         printf("职务津贴:\n");
+	         scanf("%f",&zggz[j].dutyz);
 	   
-	     printf("绩效工资:\n");
-	     scanf("%f",&zggz[j].perz);
+	         printf("绩效工资:\n");
+	         scanf("%f",&zggz[j].perz);
 	 	
-	     zggz[j].shouldz = zggz[j].jobz+zggz[j].agesz+zggz[j].dutyz+zggz[j].perz;//计算应发工资
+	         zggz[j].shouldz = zggz[j].jobz+zggz[j].agesz+zggz[j].dutyz+zggz[j].perz;//计算应发工资
 
-	     zggz[j].tax = grsds(zggz[j].shouldz);                                   //计算所得税
-	
-	     zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
-
-         printf("以下是您所修改的信息\n");
-
-         printf("工号: ");
-	     printf("%s\n",zggz[j].num);
-
-	     printf("姓名: ");
-	     printf("%s\n",zggz[j].name);
-	   
-	     printf("岗位工资: ");
-	     printf("%.2f\n",zggz[j].jobz);
-
-	     printf("薪级工资: ");
-	     printf("%.2f\n",zggz[j].agesz);
-	   
-	     printf("职务津贴: ");
-	     printf("%.2f\n",zggz[j].dutyz);
-	   
-	     printf("绩效工资: ");
-	     printf("%.2f\n",zggz[j].perz);
+	         zggz[j].tax = grsds(zggz[j].shouldz);                                   //计算所得税
+	 
+	         zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
+		 
+		 printf("以下是您所修改的信息\n");
+		 
+		 printf("工号: ");
+		 printf("%s\n",zggz[j].num);
+		 printf("姓名: ");
+		 printf("%s\n",zggz[j].name);
+		 printf("岗位工资: ");
+		 printf("%.2f\n",zggz[j].jobz);
+		 printf("薪级工资: ");
+		 printf("%.2f\n",zggz[j].agesz);
+		 printf("职务津贴: ");
+		 printf("%.2f\n",zggz[j].dutyz);
+		 printf("绩效工资: ");
+		 printf("%.2f\n",zggz[j].perz);
    }
 
    int s;
@@ -408,7 +403,7 @@ void del()
               //按照工号依次查找
    else
    {
-      printf("==========是否确定删除?  输入1确认，退出请输入其他字符===========\n");
+	  printf("==========是否确定删除?  输入1确认，退出请输入其他字符===========\n");
 	  
 	  int c2;
 
@@ -487,31 +482,31 @@ void add()
 	     printf("绩效工资:\n");
 	     scanf("%f",&zggz[n].perz);
 
-	    zggz[n].shouldz = zggz[n].jobz + zggz[n].agesz + zggz[n].dutyz + zggz[n].perz;        //计算应发工资
+	     zggz[n].shouldz = zggz[n].jobz + zggz[n].agesz + zggz[n].dutyz + zggz[n].perz;        //计算应发工资
 	
-	    zggz[n].tax = grsds(zggz[n].shouldz);                                                 //计算所得税
+	     zggz[n].tax = grsds(zggz[n].shouldz);                                                 //计算所得税
 	
-	    zggz[n].realz = zggz[n].shouldz - zggz[n].tax;                                        //计算实发工资
+	     zggz[n].realz = zggz[n].shouldz - zggz[n].tax;                                        //计算实发工资
 
-	    printf("以下为您所输入的信息 \n");
+	     printf("以下为您所输入的信息 \n");
 
-	    printf("工号: ");
-	    printf("%s\n",zggz[n].num);
+	     printf("工号: ");
+	     printf("%s\n",zggz[n].num);
 
-	    printf("姓名: ");
-	    printf("%s\n",zggz[n].name);
+	     printf("姓名: ");
+	     printf("%s\n",zggz[n].name);
 	   
-	    printf("岗位工资: ");
-	    printf("%.2f\n",zggz[n].jobz);
+	     printf("岗位工资: ");
+	     printf("%.2f\n",zggz[n].jobz);
 
-	    printf("薪级工资: ");
-	    printf("%.2f\n",zggz[n].agesz);
+	     printf("薪级工资: ");
+	     printf("%.2f\n",zggz[n].agesz);
 	   
-	    printf("职务津贴: ");
-	    printf("%.2f\n",zggz[n].dutyz);
+	     printf("职务津贴: ");
+	     printf("%.2f\n",zggz[n].dutyz);
 	   
-	    printf("绩效工资: ");
-	    printf("%.2f\n",zggz[n].perz);
+	     printf("绩效工资: ");
+	     printf("%.2f\n",zggz[n].perz);
 	}    // 输出输入的信息
 
 	    n++;   // 每次增加人数1
@@ -546,13 +541,11 @@ void list()
 
     for(int i=0;i<n;i++)
       {
-	      printf("--------------------------------------------------------------\n");
-          printf("工号     姓名    岗位工资   薪级工资   职务津贴  \n");
+		  printf("--------------------------------------------------------------\n");
+		  printf("工号     姓名    岗位工资   薪级工资   职务津贴  \n");
 		  printf("%s     %s    %.2f   %.2f    %.2f\n",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz);
-
-	      printf("绩效工资   应发工资   个人所得税   实发工资  \n");
-	      printf("%.2f      %.2f        %.2f   %.2f\n",zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);
-	      
+		  printf("绩效工资   应发工资   个人所得税   实发工资  \n");
+		  printf("%.2f      %.2f        %.2f   %.2f\n",zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);    
 		  printf("--------------------------------------------------------------\n");
       }
   
@@ -572,15 +565,15 @@ void menu()
 {    
 	printf("        请根据以下的提示序号输入您所需的功能:         \n");
 	printf("                       ===================================================\n");
-    printf("                       |          1.查询职工工资记录                      |\n");
-    printf("                       |          2.修改职工工资记录                      |\n");
+	printf("                       |          1.查询职工工资记录                      |\n");
+	printf("                       |          2.修改职工工资记录                      |\n");
 	printf("                       |          3.添加职工工资记录                      |\n");
 	printf("                       |          4.删除职工工资记录                      |\n");
 	printf("                       |          5.保存数据到文件                        |\n");
 	printf("                       |          6.浏览职工记录                          |\n");
 	printf("                       |          7.退出菜单,返回上级菜单                 |\n");
 	printf("                       ===================================================\n");
-    printf("\n");
+	printf("\n");
 
     int c1;
 
