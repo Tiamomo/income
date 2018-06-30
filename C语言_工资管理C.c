@@ -1,7 +1,7 @@
 /*************************************************
 Copyright (C语言), 2018, Mango Tech. Co., Ltd.
  文件名: 工资管理.c
- Author:蒙世满(117583010128) Version:C语言 Date:28,6,2018 
+ Author:蒙世满(117583010128) Version:C语言 Date:30,6,2018 
  Description: 
  I. 主要功能:()
  对职员的工资进行增删改减查询的操作,并保存到指定文件(gx.dat);
@@ -365,7 +365,6 @@ void modify()
 		
    
 }
-
 /*************************************************
  Function: del();
  Description: 删除对应目标的人员
@@ -443,18 +442,19 @@ void del()
 }
 /*************************************************
  Function: add()
- Description: 增加记录信息
+ Description: 增加记录信息，并判断是否重复工号记录
  Calls: write()保存函数
  Called By: 无
  Table Accessed: 无
  Table Updated: 无
- Input: 定义's'实现是否确定保存的功能
+ Input: 定义's'实现是否确定保存的功能，
  Output: 无
  Return: 无返回值
  Others: 该函数将显示您所填的信息
 *************************************************/ 
 void add()
 {
+	int i=0,j=101;
 	
 	if ( n > 50)
 	{
@@ -462,66 +462,81 @@ void add()
 	}
 	else
 	{
-	     printf("请输入全部信息 \n");
+		printf("请输入增加成员的全部信息 \n");
 
-	     printf("工号:\n");
-	     scanf("%s",zggz[n].num);
+		printf("工号:\n");
 
-	     printf("姓名:\n");
-	     scanf("%s",zggz[n].name);
-	   
-	     printf("岗位工资:\n");
-	     scanf("%f",&zggz[n].jobz);
+		scanf("%s",zggz[n].num);
 
-	     printf("薪级工资:\n");
-	     scanf("%f",&zggz[n].agesz);
-	   
-	     printf("职务津贴:\n");
-	     scanf("%f",&zggz[n].dutyz);
-	   
-	     printf("绩效工资:\n");
-	     scanf("%f",&zggz[n].perz);
+		for (;i<n;i++)
+		{
+			if (strcmp(zggz[i].num,zggz[n].num)==0)
+			{
+				j=i;
+			}
+		}
 
-	     zggz[n].shouldz = zggz[n].jobz + zggz[n].agesz + zggz[n].dutyz + zggz[n].perz;        //计算应发工资
-	
-	     zggz[n].tax = grsds(zggz[n].shouldz);                                                 //计算所得税
-	
-	     zggz[n].realz = zggz[n].shouldz - zggz[n].tax;                                        //计算实发工资
-
-	     printf("以下为您所输入的信息 \n");
-
-	     printf("工号: ");
-	     printf("%s\n",zggz[n].num);
-
-	     printf("姓名: ");
-	     printf("%s\n",zggz[n].name);
-	   
-	     printf("岗位工资: ");
-	     printf("%.2f\n",zggz[n].jobz);
-
-	     printf("薪级工资: ");
-	     printf("%.2f\n",zggz[n].agesz);
-	   
-	     printf("职务津贴: ");
-	     printf("%.2f\n",zggz[n].dutyz);
-	   
-	     printf("绩效工资: ");
-	     printf("%.2f\n",zggz[n].perz);
-	}    // 输出输入的信息
-
-	    n++;   // 每次增加人数1
-
-		int s;
-
-		printf("========确认是否保存? 1:是; 0:否 ==========\n");
-
-		scanf("%d",&s);
-
-		if(s==1)
-		    {
+		if (j != 101)
+		{
+			printf("==========重复工号，请重新输入！！！！==========\n");
+		}                                                                     //判断是否重复
+		else
+		{
+			printf("姓名:\n");
+			scanf("%s",zggz[n].name);
+			
+			printf("岗位工资:\n");
+			scanf("%f",&zggz[n].jobz);
+			
+			printf("薪级工资:\n");
+			scanf("%f",&zggz[n].agesz);
+			
+			printf("职务津贴:\n");
+			scanf("%f",&zggz[n].dutyz);
+			
+			printf("绩效工资:\n");
+			scanf("%f",&zggz[n].perz);
+			
+			zggz[n].shouldz = zggz[n].jobz + zggz[n].agesz + zggz[n].dutyz + zggz[n].perz;        //计算应发工资
+			
+			zggz[n].tax = grsds(zggz[n].shouldz);                                                 //计算所得税
+			
+			zggz[n].realz = zggz[n].shouldz - zggz[n].tax;                                        //计算实发工资
+			
+			printf("以下为您所输入的信息 \n");
+			
+			printf("工号: ");
+			printf("%s\n",zggz[n].num);
+			
+			printf("姓名: ");
+			printf("%s\n",zggz[n].name);
+			
+			printf("岗位工资: ");
+			printf("%.2f\n",zggz[n].jobz);
+			
+			printf("薪级工资: ");
+			printf("%.2f\n",zggz[n].agesz);
+			
+			printf("职务津贴: ");
+			printf("%.2f\n",zggz[n].dutyz);
+			
+			printf("绩效工资: ");
+			printf("%.2f\n",zggz[n].perz);                     // 输出输入的信息
+			
+			n++;                                // 每次增加人数1
+			
+			int s;
+			
+			printf("========确认是否保存? 1:是; 0:否 ==========\n");
+			
+			scanf("%d",&s);
+			
+			if (s == 1)
+			{
 				write();
-		    }
-	
+			}
+		}
+	}
 }
 /*************************************************
  Function: list();

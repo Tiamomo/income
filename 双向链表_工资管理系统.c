@@ -1,7 +1,7 @@
 /*************************************************
 Copyright (C语言), 2018, Mango Tech. Co., Ltd.
  文件名: 工资管理.c
- Author:蒙世满(117583010128) Version:C语言&双向链表 Date:29,6,2018 
+ Author:蒙世满(117583010128) Version:C语言&双向链表 Date:30,6,2018 
  Description: 
  I. 主要功能:()
  对职员的工资进行增删改减查询的操作,并保存到指定文件(gx.dat);
@@ -60,7 +60,7 @@ node zggz[50];
 
 unsigned int len = sizeof(node);//记录结构体的长度
 
-int k=0;//全局变量，进行文件读取时个数的记录
+int n=0;//全局变量，进行文件读取时个数的记录
 
 /*************************************************
  Function: grsds();
@@ -159,7 +159,7 @@ double grsds(float v)
  Output: 无
  Return: 返回值类型为node类型的指针.
 *************************************************/ 
-node* create(int n)
+node* create(int k)
 {
 	node *head,*cur,*prev;
    
@@ -184,7 +184,7 @@ node* create(int n)
 
     prev = head;
 
-   for(n;n>=1;n--)
+   for(k;k>=1;k--)
    {
         if ((cur = (node *)malloc(len)) == NULL)
 		{
@@ -231,14 +231,14 @@ node* create(int n)
 
    prev->next=head;
 
-   head->prev=cur;
+   head->prev=prev;
 
    return head;
    
 }
 /*************************************************
  Function: read();
- Description: 通过创建新的双向链表，进行文件中数据的读取，并返回该链表的头部。在读取文件通过stat函数进行文件字节数的读取，以便后面建立链表时候进行结构体个数的计算
+ Description: 首先从文件进行去取数据存到数组zggz里面，并通过全局变量n进行人员的数的记录。
  Calls: fopen()、fclose();
  Called By: 无
  Table Accessed: 无
@@ -257,18 +257,18 @@ node *read()
 	{
 	   printf("打开文件失败！\n");
 
-	   getch();
+	   //getch();
 
 	   exit(-1);
 	}
     else
-	    printf("成功！！ \n");
+	    printf("\n");
 
 	while (!feof(fp))
 	{
-	   fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[k].num,zggz[k].name,&zggz[k].jobz,&zggz[k].agesz,&zggz[k].dutyz,&zggz[k].perz,&zggz[k].shouldz,&zggz[k].tax,&zggz[k].realz);//将数据存入数组 
+	   fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
 
-	   k++;//记录人数
+	   n++;//记录人数
 	}
 
 	if ((head = (node *)malloc(len))==NULL)
@@ -291,7 +291,7 @@ node *read()
 
    prev = head;
 
-  for(i = 0;i < k; i++)
+  for(i = 0;i < n; i++)
   {
        if ((cur = (node *)malloc(len))==NULL)
 	   {
@@ -327,7 +327,7 @@ node *read()
 
     head->prev=cur;
 
-    printf("目前人数为%d\n",k);
+	//printf("          ### 目前人数为%d  ###\n",n);
 
 	fclose(fp);//关闭文件
 
@@ -358,12 +358,12 @@ void write(node *head)
 	{
 	   printf("打开文件失败！\n");
 
-	   getch();
+	   //getch();
 
 	   exit(-1);
 	}
     else
-	    printf("打开成功！！ \n");
+	    printf("\n");
 
 	while(cur5!=head)
 		 {
@@ -385,28 +385,49 @@ void write(node *head)
  Called By: 无
  Table Accessed: 无
  Table Updated: 无
- Input: 根据提示依次输入信息数据，定义's'实现是否确定保存的功能
+ Input: 根据提示依次输入信息数据，定义's'实现是否确定保存的功能,定义cur5进行输入工号是否重复
  Output: 无
  Return: 无返回值
  Others: 该函数将显示您所填的信息
 *************************************************/
-void add(node *head)
+void add(node *head,int k)
 {
-   
-   node *add;
-   int s;
+	node *add,*cur5;
 
-   if ((add = (node *)malloc(len))==NULL)
-		{
-             printf("获取空间失败！！请重试！\n");
-	         exit(-1);
-		}
+	int s,i,j = 101;
 
-         printf("请输入全部信息 \n");
+	cur5 = head->next;
 
-	     printf("工号:\n");
-	     scanf("%s",add->num);
+	if ((add = (node *)malloc(len)) == NULL)
+	{
+		printf("获取空间失败！！请重试！\n");
 
+		exit(-1);
+	}
+
+	printf("请输入增加人员的全部信息 \n");
+
+	printf("工号:\n");
+
+	scanf("%s",add->num);
+
+	for (i = 1;i <= k; i++)
+	{
+
+		if (strcmp(add->num,cur5->num) == 0)
+	   {
+		   j = i;
+
+		   cur5 = cur5->next;
+	    }
+		else
+		   {
+			   cur5 = cur5->next;
+		   }
+	}
+
+	if (j == 101)
+	{
 	     printf("姓名:\n");
 	     scanf("%s",add->name);
 	   
@@ -451,18 +472,26 @@ void add(node *head)
 		 head->prev->next=add;
 		 add->prev=head->prev;//实现与尾部结点的连接
 
-		 head->prev=add;
-		 add->next=head;//实现与head头部的连接 
+		 head->prev = add;
+		 add->next = head;//实现与head头部的连接 
 
-		 printf("是否保存？1是，0否\n");
+		 printf("是否将数据保存到文件？1是，0否\n");
 
 	     scanf("%d",&s);
 
-	     if (s==1)
+	     if (s == 1)
 		 {
 	         write(head);
 		 }
 
+	}
+	else
+	{
+	   printf("已有此工号，请重新输入！！！即将退出！\n");
+
+	   printf("\n");
+	}
+	
 }
 /*************************************************
  Function: del();
@@ -476,62 +505,59 @@ void add(node *head)
  Return: 无返回值
  Others: 该函数实现方法为,通过循坏语句找到相应目标人员，后通过改变前中后的prev/next实现删除，并在最后释放空间
 *************************************************/ 
-void del(node *head,int n)
+void del(node *head,int k)
 {
     node *cur4;
 
-    int i,j=101;
+    int i,j = 101,s;
 
     char gonghao[10];
 
-    cur4=head->next;
+    cur4 = head->next;
 
     printf("===请输入所要删除的工号 \n");
 
     scanf("%s",gonghao);
 
-    for(i=0;i<n;i++)
+    for (i = 0;i < k; i++)
 	{
-	   int c4,s;
+		int c4;
 
-       if (strcmp(gonghao,cur4->num) == 0)
-	   {         
-          j=i;
+		if (strcmp(gonghao,cur4->num) == 0)
+		{
+			j = i;
 
-          printf("是否确认删除？1是0否\n");
+			printf("是否确认删除？1是0否\n");
 
-		  scanf("%d",&c4);
+			scanf("%d",&c4);
 
-		  if(c4==1)
-		  {
-		      cur4->prev->next=cur4->next;
+			if (c4 == 1)
+			{
+				cur4->prev->next = cur4->next;
 
-			  cur4->next->prev=cur4->prev;//cur3,cur4,cur5例子
+				cur4->next->prev = cur4->prev;//cur3,cur4,cur5例子
 
-			  free(cur4);
-		  }
-		 
-	   }
-	   else
-		   cur4=cur4->next;
-       
-	  
-	   printf("是否保存？1是，0否\n");
-
-	   scanf("%d",&s);
-
-	   if(s==1)
-	   {
-	       write(head);
-	   }
-
-
+				free(cur4);
+			}
+			
+			cur4 = cur4->next;
+		}
+		else
+			cur4 = cur4->next;
   }
-  if(j==101)
-	   {
-	       printf("无此工号，请确认是否正确！！！");
-	   
-	   }
+	printf("是否将数据保存到文件？1是，0否\n");
+	
+	scanf("%d",&s);
+
+	if (s == 1)
+	{
+		write(head);
+	}
+
+	if (j == 101)
+	{
+		printf("无此工号，请确认是否正确！！！");
+	}
 
 }
 /*************************************************
@@ -541,12 +567,12 @@ void del(node *head,int n)
  Called By: 无
  Table Accessed: 无
  Table Updated: 无
- Input: 定义'i','j'进行循环的检索并记录目标的位置,定义's'实现是否确定保存的功能
+ Input: 定义'i','j'进行循环的检索并记录目标的位置,定义's'实现是否确定保存的功能,定义cur3进行查找目标
  Output: 无
  Return: 无
  Others: 该函数将会提示您所修改的信息
 *************************************************/ 
-void modify(node *head,int n)
+void modify(node *head,int k)
 {
     node *cur3;
 
@@ -554,19 +580,29 @@ void modify(node *head,int n)
 
     char gonghao[10];
 
-    cur3=head->next;
+    cur3 = head->next;
 
     printf("===请输入所要修改的工号=== \n");
 
     scanf("%s",gonghao);
 
-    for (i=0;i<n;i++)
+    for (i = 0;i < k; i++)
 	{
        if (strcmp(gonghao,cur3->num) == 0)
 	   {         
-          j=i;
-		  
-		  printf("请重新输入该员工的基本信息！！\n");
+          j = i;
+	   }
+	   else
+		   cur3 = cur3->next;
+  }
+	if (j == 101)
+	   {
+	       printf("无此工号，请确认是否正确！！！");
+	   
+	   }
+	else
+	{
+          printf("请重新输入该员工的基本信息！！\n");
 
 		  printf("工号:\n");
 	      scanf("%s",cur3->num);
@@ -611,27 +647,16 @@ void modify(node *head,int n)
 	   
 	      printf("绩效工资: ");
 	      printf("%.2f\n",cur3->perz);
-	   }
-
-	   else
-		   cur3=cur3->next;
+  
   }
-
-  if(j==101)
-	   {
-	       printf("无此工号，请确认是否正确！！！");
-	   
-	   }
-
-       printf("是否保存？1是，0否\n");
-
-	   scanf("%d",&s);
-
-	   if(s==1)
-	   {
-	   
-	      write(head);
-	   }
+	printf("是否将数据保存到文件？1是，0否\n");
+	
+	scanf("%d",&s);
+	
+	if (s == 1)
+	{
+		write(head);
+	}
 
 
 }
@@ -646,17 +671,23 @@ void modify(node *head,int n)
  Output: 无
  Return: 无返回值
 *************************************************/ 
-void find(node *head,int n)
+void find(node *head,int k)
 {
-     node *cur2;
-     int i,j=101;
-     char gonghao[10];
-     cur2=head->next;
-     printf("===请输入所要查找的工号 \n");
-     scanf("%s",gonghao);
-     for(i=0;i<n;i++)
-	 {
-         if(strcmp(gonghao,cur2->num)==0)
+	node *cur2;
+	
+	int i,j = 101;
+
+	char gonghao[10];
+
+	cur2 = head->next;
+
+	printf("===请输入所要查找的工号 \n");
+
+	scanf("%s",gonghao);
+
+	for (i = 0;i < k; i++)
+	{
+         if (strcmp(gonghao,cur2->num) == 0)
 		 {
 		     printf("====一下是您所要查找成员的工号信息=====\n");
 	         printf("工号:\n");
@@ -690,13 +721,12 @@ void find(node *head,int n)
 		 
 	   }
 	   else
-		   cur2=cur2->next;	   
+		   cur2 = cur2->next;	   
   
   }
-  if(j==101)
+  if (j == 101)
 	   {
-	       printf("无此工号，请确认是否正确！！！");
-	   
+	       printf("无此工号，请确认是否正确！！！");	   
 	   }
 
 }
@@ -715,9 +745,9 @@ void list(node *head)
 {
    node *cur1;
 
-   cur1=head->next;//The first node
+   cur1 = head->next;//The first node
 
-   while(cur1 != head)
+   while (cur1 != head)
    {
           printf("--------------------------------------------------------------\n");
           printf("工号     姓名    岗位工资   薪级工资   职务津贴  \n");
@@ -728,104 +758,133 @@ void list(node *head)
 	      
 		  printf("--------------------------------------------------------------\n");
 
-		  cur1=cur1->next;
+		  cur1 = cur1->next;
    
    }
    
 }
-
-
-
+/*************************************************
+ Function: main();
+ Description: 显示提示信息
+ Calls: 无 
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义c、c1进行条件语句的进行
+ Output: 无
+ Return: 无返回值
+*************************************************/
 int main()
-{
-	int c,n,c1;
+{       	    
+
+
+	int c,k,c1;
+
 	node *head;
 
-    printf("=====是否创建链表进行人员输入，若确定请输入1后输入想要的结点个数，否则为0进行文件的扫描读取链表====\n");
+	printf("\n");
+
+	printf("                  ###   欢迎使用广西民族大学软件与信息安全学院职工工资管理系统   ###\n",n);
+
+	printf("\n");
+
+    printf("      =====是否创建链表进行人员输入，若确定请输入1后输入想要的结点个数，否则进行文件的扫描读取链表====\n");
 
     scanf("%d",&c);
-	
 
-	if(c==1)
+	if (c==1)
 	{
 		printf("请输入所需要的链表大小\n");
-	
-		scanf("%d",&n);
 
-	    head=create(n);
+		scanf("%d",&k);
+
+		head=create(k);
+		
 		while(1)
 		{
-		   printf("        《--------请根据以下的提示序号输入您所需的功能---------》》        \n");
-           printf("        《--------1为查询，2为修改，3为添加，4为删除-----------》》        \n");
-           printf("        《--------5为保存，6为浏览，7为退出-----------》》       \n");
-           printf("\n");
+		  printf("            已经完成链表的创建，请根据以下的提示序号输入您所需的功能:         \n");
+		  printf("                       ===================================================\n");
+		  printf("                       |          1.查询职工工资记录                      |\n");
+		  printf("                       |          2.修改职工工资记录                      |\n");
+		  printf("                       |          3.添加职工工资记录                      |\n");
+		  printf("                       |          4.删除职工工资记录                      |\n");
+		  printf("                       |          5.保存数据到文件                        |\n");
+		  printf("                       |          6.浏览职工记录                          |\n");
+		  printf("                       |          7.退出菜单,返回上级菜单                 |\n");
+		  printf("                       ===================================================\n");
+		  printf("\n");
 
-           scanf("%d",&c1);
+          scanf("%d",&c1);
 
-           switch(c1)
-		   {
-               case 1:
-	             find(head,k);//查询
-	             break;
-
-              case 2:
-	             modify(head,k); //修改
-	             break;
-
-              case 3:
-	             add(head);     //增加
-	             break;
-
-              case 4:
-	             del(head,k);	   //删除
-	             break;
-
-              case 5:
-	             write(head);	   //保存
-	             break;
-
-             case 6:
-	            list(head);
+          switch(c1)
+		  {
+		    case 1:
+				find(head,k);//查询
 	            break;
 
-             case 7:
-				 exit(-1);
-	            break;		//浏览
-		   }
+			case 2:
+				modify(head,k); //修改
+	            break;
 
-		
+			case 3:
+				add(head,k);     //增加
+	            break;
+
+			case 4:
+				del(head,k);	   //删除
+	            break;
+
+			case 5:
+				write(head);	   //保存
+	            break;
+
+			case 6:
+				list(head);         //浏览
+	            break;
+
+			case 7:
+				exit(-1);
+	            break;
+
+		   }		
 		}
-	}
-	      
+	}	      
 	else
 	{
 		head=read();//获取链表
 
 		while(1)
 		{
-		   printf("        《--------请根据以下的提示序号输入您所需的功能---------》》        \n");
-           printf("        《--------1为查询，2为修改，3为添加，4为删除-----------》》        \n");
-           printf("        《--------5为保存，6为浏览，7为退出并返回上级-----------》》       \n");
-           printf("\n");
+		  printf("   已经成功将数据获取,请根据以下的提示序号输入您所需的功能:         \n",n);
+		  printf("                       ===================================================\n");
+		  printf("                       |          1.查询职工工资记录                      |\n");
+		  printf("                       |          2.修改职工工资记录                      |\n");
+		  printf("                       |          3.添加职工工资记录                      |\n");
+		  printf("                       |          4.删除职工工资记录                      |\n");
+		  printf("                       |          5.保存数据到文件                        |\n");
+		  printf("                       |          6.浏览职工记录                          |\n");
+		  printf("                       |          7.退出系统                              |\n");
+		  printf("                       ===================================================\n");
+		  printf("\n");
 
            scanf("%d",&c1);
 
            switch(c1)
 		   {
                case 1:
-	             find(head,k);//查询
+	             find(head,n);//查询
 	             break;
 
               case 2:
-	             modify(head,k); //修改
+	             modify(head,n); //修改
 	             break;
 
               case 3:
-	             add(head);     //增加
+	             add(head,n);     //增加
 	             break;
 
               case 4:
-	             del(head,k);	   //删除
+	             del(head,n);	   //删除
 	             break;
 
               case 5:
@@ -841,13 +900,9 @@ int main()
 	            break;		//浏览
 		   }
 
-		
 		}
-	
-	
+
 	}
 	   
 		return 0;
-
-
 }
