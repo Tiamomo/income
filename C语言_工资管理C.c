@@ -292,78 +292,77 @@ void modify()
 {
 	char gonghao[10];
 
-    int i=0,j=101;
+	int i=0,j=101;
 
-    printf("=========请输入要修改的工号=========== \n");
+	printf("=========请输入要修改的工号=========== \n");
 
-    scanf("%s",gonghao);
+	scanf("%s",gonghao);
 
-    for (;i<n;i++)
-	   if (strcmp(gonghao,zggz[i].num)==0)
-		   j=i;
-    if (j == 101)
-    {
-         printf("==========无此员工！！请确认工号是否正确！！==========\n");
-    }
-              //按照工号依次查找
-   
-    else
-     {
-	         printf("==========请重新录入基本信息=========\n");
+	for (;i < n; i++)
+		if (strcmp(gonghao,zggz[i].num) == 0)
+			j = i;
+	if (j == 101)
+	{
+		printf("==========无此员工！！请确认工号是否正确！！==========\n");
+	}
+	                                   //按照工号依次查找
+	else
+	{
+		printf("==========请重新录入基本信息=========\n");
 
-	         printf("工号:\n");
-	         scanf("%s",zggz[j].num);
+		printf("工号:\n");
+		scanf("%s",zggz[j].num);
 
-	         printf("姓名:\n");
-	         scanf("%s",zggz[j].name);
-	   
-	         printf("岗位工资:\n");
-	         scanf("%f",&zggz[j].jobz);
+		printf("姓名:\n");
+		scanf("%s",zggz[j].name);
 
-	         printf("薪级工资:\n");
-	         scanf("%f",&zggz[j].agesz);
-	   
-	         printf("职务津贴:\n");
-	         scanf("%f",&zggz[j].dutyz);
-	   
-	         printf("绩效工资:\n");
-	         scanf("%f",&zggz[j].perz);
-	 	
-	         zggz[j].shouldz = zggz[j].jobz+zggz[j].agesz+zggz[j].dutyz+zggz[j].perz;//计算应发工资
+		printf("岗位工资:\n");
+		scanf("%f",&zggz[j].jobz);
 
-	         zggz[j].tax = grsds(zggz[j].shouldz);                                   //计算所得税
-	 
-	         zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
-		 
-		 printf("以下是您所修改的信息\n");
-		 
-		 printf("工号: ");
-		 printf("%s\n",zggz[j].num);
-		 printf("姓名: ");
-		 printf("%s\n",zggz[j].name);
-		 printf("岗位工资: ");
-		 printf("%.2f\n",zggz[j].jobz);
-		 printf("薪级工资: ");
-		 printf("%.2f\n",zggz[j].agesz);
-		 printf("职务津贴: ");
-		 printf("%.2f\n",zggz[j].dutyz);
-		 printf("绩效工资: ");
-		 printf("%.2f\n",zggz[j].perz);
-   }
+		printf("薪级工资:\n");
+		scanf("%f",&zggz[j].agesz);
 
-   int s;
+		printf("职务津贴:\n");
+		scanf("%f",&zggz[j].dutyz);
 
-		printf("=======确认是否保存? 1:是; 0:否 =======\n");
+		printf("绩效工资:\n");
+		scanf("%f",&zggz[j].perz);
 
-		scanf("%d",&s);
+		zggz[j].shouldz = zggz[j].jobz+zggz[j].agesz+zggz[j].dutyz+zggz[j].perz;//计算应发工资
+		zggz[j].tax = grsds(zggz[j].shouldz);                                   //计算所得税
+		zggz[j].realz = zggz[j].shouldz-zggz[j].tax;                            //计算实发工资
 
-		if(s==1)
-		    {
-				write();
-		    }
-	
-		
-   
+		printf("以下是您所修改的信息\n");
+
+		printf("工号: ");
+		printf("%s\n",zggz[j].num);
+
+		printf("姓名: ");
+		printf("%s\n",zggz[j].name);
+
+		printf("岗位工资: ");
+		printf("%.2f\n",zggz[j].jobz);
+
+		printf("薪级工资: ");
+		printf("%.2f\n",zggz[j].agesz);
+
+		printf("职务津贴: ");
+		printf("%.2f\n",zggz[j].dutyz);
+
+		printf("绩效工资: ");
+		printf("%.2f\n",zggz[j].perz);
+	}
+
+	int s;
+
+	printf("=======确认是否保存? 1:是; 0:否 =======\n");
+
+	scanf("%d",&s);
+
+	if (s == 1)
+	{
+		write();
+	}
 }
 /*************************************************
  Function: del();
