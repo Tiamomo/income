@@ -154,65 +154,63 @@ void write()
 {
     printf("目前人数为%d\n",n);
 
-	int j = n;
+    int j = n;
 
     if (j > 0 && j < 50)
-	{
-		 FILE *fp2;
-	
-	     if ((fp2 = fopen ("gx.dat","wb+")) == NULL)
-	      {
-	           printf("打开文件失败\n");
+    {
+         FILE *fp2;
 
-	           getch();
+         if ((fp2 = fopen ("gx.dat","wb+")) == NULL)
+         {
+              printf("打开文件失败\n");
 
-	           exit(-1);
-	      }
+              getch();
+
+              exit(-1);
+          }
     else
 	     printf("打开成功！！正在保存  ");
-		 
-		 for (int i=0;i<n;i++)
-		 {
-			   fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件
-			   fprintf(fp2,"\n");
-		  }
-		  printf("保存完成！\n");
 
-		  fclose(fp2);//关闭文件
+         for (int i=0;i<n;i++)
+         {
+              fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件
 
-      }          //  重新全部录入文件
+              fprintf(fp2,"\n");
 
-  else
-	  if(j==0)
-	  {
-		    FILE *fp2;
-	
-	        if ((fp2 = fopen ("gd.dat","rb+")) == NULL)
-	          {
-	              printf("打开文件失败\n");
+          }
 
-	              getch();
+          printf("保存完成！\n");                   //  重新全部录入文件
 
-			      exit(-1);
-			  }
-	  
-           else
-	           {
-				   printf("打开成功！！正在保存\n");
-
-				   fprintf(fp2,"%s %s %s %s %s %s %s %s %s"," "," "," "," "," "," "," "," "," ");
-				   
-				   fprintf(fp2,"\n");
-
-				   printf("保存完成！\n");
-
-				   fclose(fp2);//关闭文件
-			   }
-      }
-
-	  else
-               printf("无记录！！！\n");
-	  
+          fclose(fp2);                              //关闭文件
+	}          
+	else
+		if (j == 0)
+		{
+			FILE *fp2;
+			
+			if ((fp2 = fopen ("gd.dat","rb+")) == NULL)
+			{
+				printf("打开文件失败\n");
+				
+				getch();
+				
+				exit(-1);
+			}
+			else
+			{
+				printf("打开成功！！正在保存\n");
+				
+				fprintf(fp2,"%s %s %s %s %s %s %s %s %s"," "," "," "," "," "," "," "," "," ");
+				
+				fprintf(fp2,"\n");
+				
+				printf("保存完成！\n");
+				
+				fclose(fp2);//关闭文件
+			}
+		}
+		else
+			printf("无记录！！！\n");
 }
 
 /*************************************************
