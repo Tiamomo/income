@@ -68,7 +68,7 @@ int n=0;   // 全局变量,记录人员数
 
 double grsds(float v)
 {   
-	double ctax;
+    double ctax;
 
     if (v > 0)
 	{
@@ -376,8 +376,7 @@ void modify()
 *************************************************/ 
 void del()
 {
-	
-	char gonghao[10];
+    char gonghao[10];
 
     int i=0,j=101;
 
@@ -635,53 +634,51 @@ void menu()
 void read()
 {
     FILE *fp;
-	
-	if ((fp = fopen ("gx.dat","rb+")) == NULL)
-	{
-	   printf("打开文件失败！\n");
 
-	   getch();
+    if ((fp = fopen ("gx.dat","rb+")) == NULL)
+    {
+         printf("打开文件失败！\n");
 
-	   exit(-1);
-	}
+         getch();
+
+         exit(-1);
+    }
     else
-	    printf("\n");
+        printf("\n");
 
-	while (!feof(fp))
-	{
-	   fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
+    while (!feof(fp))
+    {
+        fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
 
-	   n++;//记录人数
+        n++;//记录人数
+     }
+
+    fclose(fp);//关闭文件
+
+    printf("                  ###   欢迎使用广西民族大学软件与信息安全学院职工工资管理系统   ###\n",n);
+    printf("\n");
+
+    while (1)
+    {
+       printf("                       ===================================================\n");
+       printf("                       #             输入1进入菜单                       #\n");
+       printf("                       #             输入0退出                           #\n");
+       printf("                       ===================================================\n");
+       
+       int c;
+
+       scanf("%d",&c);
+
+       switch (c)
+	   {
+	   case 1:
+		   menu();
+		   break;
+	   case 0:
+		   exit(-1);
+		   break;
+	   }
 	}
-
-	fclose(fp);//关闭文件
-
-	printf("                  ###   欢迎使用广西民族大学软件与信息安全学院职工工资管理系统   ###\n",n);
-	printf("\n");
-
-	while (1)
-	{
-	   printf("                       ===================================================\n");
-	   printf("                       #             输入1进入菜单                       #\n");
-	   printf("                       #             输入0退出                           #\n");
-	   printf("                       ===================================================\n");
-	   int c;
-
-	   scanf("%d",&c);
-
-		switch (c)
-		{
-
-		    case 1:
-			    menu();
-				break;
-
-		    case 0:
-			    exit(-1);
-			    break;
-		}
-	}
-	
 }
 int main()
 {
