@@ -1,7 +1,7 @@
 /*************************************************
 Copyright (C语言), 2018, Mango Tech. Co., Ltd.
  文件名: 工资管理.c
- Author:蒙世满(117583010128) Version:C语言&双向链表 Date:30,6,2018 
+ Author:蒙世满(117583010128) Version:C语言&双向链表 Date:3,7,2018 
  Description: 
  I. 主要功能:()
  对职员的工资进行增删改减查询的操作,并保存到指定文件(gx.dat);
@@ -21,8 +21,8 @@ Copyright (C语言), 2018, Mango Tech. Co., Ltd.
    5.职务津贴	单精度实型	由职务或职称确定的工资
    6.绩效工资	单精度实型	由业绩确定的工资
    7应发工资	单精度实型	前4项工资之和
-   8.个人所得税	双精度实型	按照一定的比例计算
-   9.实发工资	双精度实型	应发工资－个人所得税
+   8.个人所得税	单精度实型	按照一定的比例计算
+   9.实发工资	单精度实型	应发工资－个人所得税
    10.truct emp *prev          左结点
    11.struct emp *next         右结点
 *************************************************/
@@ -46,9 +46,9 @@ typedef struct emp
 
 	float shouldz;   // 应发工资
 
-	double tax;      // 个人所得税
+	float tax;      // 个人所得税
 
-	double realz;    // 实发工资
+	float realz;    // 实发工资
     
 	struct emp *prev; //左结点
 
@@ -60,7 +60,7 @@ node zggz[50];
 
 unsigned int len = sizeof(node);//记录结构体的长度
 
-int n=0;//全局变量，进行文件读取时个数的记录
+int n=0;                                                 //全局变量，进行文件读取时个数的记录
 
 /*************************************************
  Function: grsds();
@@ -69,72 +69,72 @@ int n=0;//全局变量，进行文件读取时个数的记录
  Called By: 无
  Table Accessed: 无
  Table Updated: 无
- Input: 此函数从调用处获取值 "zggz[i].shouldz" 并赋值给形参 (float类型) ' v ',并定义参数 (double类型) ' ctax '保存最后计算的个人所得税 
+ Input: 此函数从调用处获取值 "zggz[i].shouldz" 并赋值给形参 (float类型) ' v ',并定义参数 (float类型) ' ctax '保存最后计算的个人所得税 
  Output: 无输出
- Return: 返回值类型为double类型的"ctax".
+ Return: 返回值类型为float类型的"ctax".
  Others: 本函数对于负数的值,将直接返回0值;
 *************************************************/ 
 
-double grsds(float v)
-{   
-	double ctax;
+float grsds(float v)
+{
+    float ctax;
 
     if (v > 0)
-	{
-		if(v > 0 && v <= 500)
+    {
+         if(v > 0 && v <= 500)
 		{
-		    ctax = v * 0.05;
+			ctax = v * 0.05;
 
 			return ctax;
 		}
-		else
+		 else
 			if ( v > 500 && v <= 2000)
 			{
 				ctax = (v-500) * 0.1 + 500 * 0.05;
-				
+
 				return ctax;
 			}
 			else
 				if (v > 2000 && v <= 5000)
 				{
-				    ctax = (v-2000) * 0.15 + 1500 * 0.1+ 500 * 0.05;
+					ctax = (v-2000) * 0.15 + 1500 * 0.1+ 500 * 0.05;
 
-				    return ctax;
+					return ctax;
 				}
 				else
 					if (v > 5000 && v <= 20000)
 					{
-					    ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+						ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-					    return ctax;
+						return ctax;
 					}
 					else
 						if (v > 20000 && v <= 40000)
 						{
-						    ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+							ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-						    return ctax;
+							return ctax;
 						}
 						else
 							if (v > 40000 && v <= 60000)
 							{
-							    ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+								ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-							    return ctax;
+								return ctax;
 							}
 							else
 								if (v > 60000 && v <= 80000)
 								{
-								   ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+									ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-								   return ctax;
+									return ctax;
 								}
 								else
 									if (v > 80000 && v <= 100000)
 									{
-									   ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+										ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-									   return ctax;
+										return ctax;
 									}
 									else
 										if (v > 100000)
@@ -147,7 +147,6 @@ double grsds(float v)
 	else
 		return 0;
 }
-
 /*************************************************
  Function: create();
  Description: 接受由主函数传过来的参数，根据需求创建一个双向链表，并返回该链表的头部；
@@ -161,10 +160,10 @@ double grsds(float v)
 *************************************************/ 
 node* create(int k)
 {
-	node *head,*cur,*prev;
+    node *head,*cur,*prev;
    
     if ((head = (node *)malloc(len)) == NULL)
-	{
+    {
 		printf("获取空间失败！！请重试！\n");
 		
 		return NULL;
@@ -184,9 +183,9 @@ node* create(int k)
 
     prev = head;
 
-   for(k;k>=1;k--)
-   {
-        if ((cur = (node *)malloc(len)) == NULL)
+    for(k;k>=1;k--)
+    {
+		if ((cur = (node *)malloc(len)) == NULL)
 		{
 			printf("获取空间失败！！请重试！\n");
 			
@@ -262,7 +261,7 @@ node *read()
 
 	while (!feof(fp))
 	{
-		fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
+		fscanf(fp,"%s %s %f %f %f %f %f %f %f\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
 
 		n++;//记录人数
 	}
@@ -294,14 +293,23 @@ node *read()
 			exit(-1);
 		}
 		prev->next=cur;
+
 		strcpy(cur->num,zggz[i].num);
+
 		strcpy(cur->name,zggz[i].name);
+
 		cur->jobz=zggz[i].jobz;
+
 		cur->agesz=zggz[i].agesz;
+
 		cur->dutyz=zggz[i].dutyz;
+
 		cur->perz=zggz[i].perz;
+
 		cur->shouldz=zggz[i].shouldz;
+
 		cur->tax=zggz[i].shouldz;
+
 		cur->realz=zggz[i].realz;
 
 		                                           //cur=cur->next;
@@ -351,7 +359,7 @@ void write(node *head)
 
 	while(cur5!=head)
 	{
-		fprintf(fp,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",cur5->num,cur5->name,cur5->jobz,cur5->agesz,cur5->dutyz,cur5->perz,cur5->shouldz,cur5->tax,cur5->realz);//讲双向链表写入文件
+		fprintf(fp,"%s %s %.2f %.2f %.2f %.2f %.2f %.2f %.2f",cur5->num,cur5->name,cur5->jobz,cur5->agesz,cur5->dutyz,cur5->perz,cur5->shouldz,cur5->tax,cur5->realz);//讲双向链表写入文件
 
 		fprintf(fp,"\n");
 
@@ -396,17 +404,17 @@ void add(node *head,int k)
 
 	for (i = 1;i <= k; i++)
 	{
-
 		if (strcmp(add->num,cur5->num) == 0)
-	   {
-		   j = i;
+		{
+			j = i;
 
-		   cur5 = cur5->next;
-	    }
+			cur5 = cur5->next;
+		}
 		else
-		   {
-			   cur5 = cur5->next;
-		   }
+		{
+			cur5 = cur5->next;
+		}
+
 	}
 
 	if (j == 101)
@@ -572,13 +580,14 @@ void modify(node *head,int k)
 
     for (i = 0;i < k; i++)
 	{
-       if (strcmp(gonghao,cur3->num) == 0)
-	   {
-		   j = i;
-	   }
-	   else
-		   cur3 = cur3->next;
-  }
+		if (strcmp(gonghao,cur3->num) == 0)
+		{
+			j = i;
+		}
+		else
+			cur3 = cur3->next;
+	}
+
 	if (j == 101)
 	   {
 	       printf("无此工号，请确认是否正确！！！");
@@ -654,11 +663,17 @@ void modify(node *head,int k)
 void find(node *head,int k)
 {
 	node *cur2;
+
 	int i,j = 101;
+
 	char gonghao[10];
+
 	cur2 = head->next;
+
 	printf("===请输入所要查找的工号 \n");
+
 	scanf("%s",gonghao);
+
 	for (i = 0;i < k; i++)
 	{
 		if (strcmp(gonghao,cur2->num) == 0)
@@ -721,12 +736,12 @@ void list(node *head)
 
 	while (cur1 != head)
 	{
-		printf("--------------------------------------------------------------\n");
+		printf("------------------------------------------------------------------------------------------------------------------------\n");
 		printf("工号     姓名    岗位工资   薪级工资   职务津贴  \n");
-		printf("%s     %s    %.2f   %.2f    %.2f\n",cur1->num,cur1->name,cur1->jobz,cur1->agesz,cur1->dutyz);
+		printf("%s     %s    %.2f     %.2f    %.2f\n",cur1->num,cur1->name,cur1->jobz,cur1->agesz,cur1->dutyz);
 		printf("绩效工资   应发工资   个人所得税   实发工资  \n");
 		printf("%.2f      %.2f        %.2f   %.2f\n",cur1->perz,cur1->shouldz,cur1->tax,cur1->realz);
-		printf("--------------------------------------------------------------\n");
+		printf("------------------------------------------------------------------------------------------------------------------------\n");
 
 		cur1 = cur1->next;
 	}
@@ -785,24 +800,30 @@ int main()
 			case 1:
 				find(head,k);//查询
 				break;
+
 			case 2:
 				modify(head,k); //修改
 				break;
+
 			case 3:
 				add(head,k);     //增加
 				break;
+
 			case 4:
 				del(head,k);	   //删除
 				break;
 			case 5:
 				write(head);	   //保存
 				break;
+
 			case 6:
 				list(head);         //浏览
 				break;
+
 			case 7:
 				exit(-1);
 				break;
+
 			}		
 		}
 	}	      

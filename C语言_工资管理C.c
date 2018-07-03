@@ -21,8 +21,8 @@ Copyright (C语言), 2018, Mango Tech. Co., Ltd.
    5.职务津贴	单精度实型	由职务或职称确定的工资
    6.绩效工资	单精度实型	由业绩确定的工资
    7应发工资	单精度实型	前4项工资之和
-   8.个人所得税	双精度实型	按照一定的比例计算
-   9.实发工资	双精度实型	应发工资－个人所得税
+   8.个人所得税	单精度实型	按照一定的比例计算
+   9.实发工资	单精度实型	应发工资－个人所得税
 *************************************************/
 #include<stdlib.h>
 #include<conio.h>
@@ -44,9 +44,9 @@ struct emploees
 
 	float shouldz;   // 应发工资
 
-	double tax;      // 个人所得税
+	float tax;      // 个人所得税
 
-	double realz;    // 实发工资
+	float realz;    // 实发工资
 
 } zggz[50];
 
@@ -60,72 +60,72 @@ int n=0;   // 全局变量,记录人员数
  Called By: 无
  Table Accessed: 无
  Table Updated: 无
- Input: 此函数从调用处获取值 "zggz[i].shouldz" 并赋值给形参 (float类型) ' v ',并定义参数 (double类型) ' ctax '保存最后计算的个人所得税 
+ Input: 此函数从调用处获取值 "zggz[i].shouldz" 并赋值给形参 (float类型) ' v ',并定义参数 (float类型) ' ctax '保存最后计算的个人所得税 
  Output: 无输出
- Return: 返回值类型为double类型的"ctax".
+ Return: 返回值类型为float类型的"ctax".
  Others: 本函数对于负数的值,将直接返回0值;
 *************************************************/ 
 
-double grsds(float v)
-{   
-    double ctax;
+float grsds(float v)
+{
+    float ctax;
 
     if (v > 0)
-	{
-		if(v > 0 && v <= 500)
+    {
+         if(v > 0 && v <= 500)
 		{
 			ctax = v * 0.05;
 
 			return ctax;
 		}
-		else
+		 else
 			if ( v > 500 && v <= 2000)
 			{
-		            ctax = (v-500) * 0.1 + 500 * 0.05;
+				ctax = (v-500) * 0.1 + 500 * 0.05;
 
-			    return ctax;
+				return ctax;
 			}
 			else
 				if (v > 2000 && v <= 5000)
 				{
-				    ctax = (v-2000) * 0.15 + 1500 * 0.1+ 500 * 0.05;
+					ctax = (v-2000) * 0.15 + 1500 * 0.1+ 500 * 0.05;
 
-				    return ctax;
+					return ctax;
 				}
 				else
 					if (v > 5000 && v <= 20000)
 					{
-					    ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+						ctax = (v-5000) * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-					    return ctax;
+						return ctax;
 					}
 					else
 						if (v > 20000 && v <= 40000)
 						{
-						    ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+							ctax = (v-20000) * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-						    return ctax;
+							return ctax;
 						}
 						else
 							if (v > 40000 && v <= 60000)
 							{
-							    ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+								ctax = (v-40000) * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-							    return ctax;
+								return ctax;
 							}
 							else
 								if (v > 60000 && v <= 80000)
 								{
-								   ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+									ctax = (v-60000) * 0.35+ 20000 * 0.3 + 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-								   return ctax;
+									return ctax;
 								}
 								else
 									if (v > 80000 && v <= 100000)
 									{
-									   ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
+										ctax = (v-80000) * 0.4 + 20000 * 0.35 + 20000 * 0.3+ 20000 * 0.25 + 15000 * 0.2 + 3000 * 0.15 + 1500 * 0.1 + 500 * 0.05;
 
-									   return ctax;
+										return ctax;
 									}
 									else
 										if (v > 100000)
@@ -138,7 +138,6 @@ double grsds(float v)
 	else
 		return 0;
 }
-
 /*************************************************
  Function: write();
  Description: 本函数将数组zggz全部写进文件"gx.dat"里面,此函数采用C语言格式进行文件的写入
@@ -173,7 +172,7 @@ void write()
 
          for (int i=0;i<n;i++)
          {
-              fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2lf %.2lf",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件
+              fprintf(fp2,"%s %s %.2f %.2f %.2f %.2f %.2f %.2f %.2f",zggz[i].num,zggz[i].name,zggz[i].jobz,zggz[i].agesz,zggz[i].dutyz,zggz[i].perz,zggz[i].shouldz,zggz[i].tax,zggz[i].realz);//将数组写入文件
 
               fprintf(fp2,"\n");
 
@@ -212,7 +211,6 @@ void write()
 		else
 			printf("无记录！！！\n");
 }
-
 /*************************************************
  Function: find();
  Description: 查询并显示目标人员信息
@@ -648,7 +646,7 @@ void read()
 
     while (!feof(fp))
     {
-        fscanf(fp,"%s %s %f %f %f %f %f %lf %lf\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
+        fscanf(fp,"%s %s %f %f %f %f %f %f %f\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//将数据存入数组 
 
         n++;//记录人数
      }
@@ -674,12 +672,25 @@ void read()
 	   case 1:
 		   menu();
 		   break;
+
 	   case 0:
 		   exit(-1);
 		   break;
+
 	   }
 	}
 }
+/*************************************************
+ Function: main();
+ Description: 显示提示信息
+ Calls: 无 
+ Called By: 无
+ Table Accessed: 无
+ Table Updated: 无
+ Input: 定义c、c1进行条件语句的进行
+ Output: 无
+ Return: 无返回值
+*************************************************/
 int main()
 {
   read();
