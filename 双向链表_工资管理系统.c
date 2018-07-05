@@ -25,6 +25,7 @@ Copyright (C语言), 2018, Mango Tech. Co., Ltd.
    9.实发工资	单精度实型	应发工资－个人所得税
    10.truct emp *prev          左结点
    11.struct emp *next         右结点
+  vI.增加在add()中实现重复工号的检验
 *************************************************/
 #include<stdio.h>
 #include<stdlib.h>
