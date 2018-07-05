@@ -201,7 +201,7 @@ node *read()
 
 					cur->prev = prev;
 
-					cur->next = NULL;
+					cur->next = NULL;                                   //前结点与当前结点的相接
 
 					prev = cur;
 				}
@@ -245,7 +245,7 @@ void write(node *head)
 
 	while(cur5!=head)
 	{
-		fprintf(fp,"%s %s %.2f %.2f %.2f %.2f %.2f %.2f %.2f",cur5->num,cur5->name,cur5->jobz,cur5->agesz,cur5->dutyz,cur5->perz,cur5->shouldz,cur5->tax,cur5->realz);//讲双向链表写入文件
+		fprintf(fp,"%s %s %.2f %.2f %.2f %.2f %.2f %.2f %.2f",cur5->num,cur5->name,cur5->jobz,cur5->agesz,cur5->dutyz,cur5->perz,cur5->shouldz,cur5->tax,cur5->realz);             //将双向链表写入文件
 
 		fprintf(fp,"\n");
 
@@ -257,7 +257,7 @@ void write(node *head)
 }
 /*************************************************
  Function: add()
- Description: 首先接受由主函数传过来的链表头部，在链表尾部进行增加,后通过改变前中后的prev/next实现增加
+ Description: 首先接受由主函数传过来的链表头部，在链表尾部进行增加,后通过改变前中后的prev/next实现增加，k值为全局变量n的值，记录当前人数
  Calls: write()，grsds();
  Called By: 无
  Table Accessed: 无
@@ -373,7 +373,7 @@ void add(node *head,int k)
 }
 /*************************************************
  Function: del();
- Description: 首先接受由主函数传过来的链表头部，然后进行查找到后进行删除对应目标的人员
+ Description: 首先接受由主函数传过来的链表头部，然后进行查找到后进行删除对应目标的人员，k值为全局变量n的值，记录当前人数
  Calls: write()
  Called By: 无
  Table Accessed: 无
@@ -404,7 +404,9 @@ void del(node *head,int k)
 		if (strcmp(gonghao,cur4->num) == 0)
 		{
 			j = i;
+
 			printf("此时j %d ",j);
+
 			printf("是否确认删除？1是0否\n");
 
 			scanf("%d",&c4);
@@ -423,24 +425,27 @@ void del(node *head,int k)
 		else
 			cur4 = cur4->next;
   }
-	printf("是否将数据保存到文件？1是，0否\n");
-	
-	scanf("%d",&s);
-
-	if (s == 1)
-	{
-		write(head);
-	}
-
 	if (j == 101)
 	{
 		printf("无此工号，请确认是否正确！！！");
 	}
+	else
+	{
+		printf("是否将数据保存到文件？1是，0否\n");
 
+		scanf("%d",&s);
+
+		if (s == 1)
+		{
+			write(head);
+		}
+
+	}
+	
 }
 /*************************************************
  Function: modify();
- Description: 首先接受由主函数传过来的链表头部，检索并匹配到工号对应的结构体进行修改并实现保存
+ Description: 首先接受由主函数传过来的链表头部，检索并匹配到工号对应的结构体进行修改并实现保存,k值为全局变量n的值，记录当前人数
  Calls: 调用了write()保存函数
  Called By: 无
  Table Accessed: 无
@@ -541,7 +546,7 @@ void modify(node *head,int k)
 }
 /*************************************************
  Function: find();
- Description: 首先接受由主函数传过来的链表头部，查询并显示目标人员信息
+ Description: 首先接受由主函数传过来的链表头部，查询并显示目标人员信息,k值为全局变量n的值，记录当前人数
  Calls: 无 
  Called By: 无
  Table Accessed: 无
@@ -624,7 +629,7 @@ void list(node *head)
 {
 	node *cur1;
 
-	cur1 = head->next;                              //The first node
+	cur1 = head->next;                              //第一个人员
 
 	while (cur1 != head)
 	{
@@ -674,7 +679,9 @@ int main()
 		printf("                       |          7.退出系统                              |\n");
 		printf("                       ===================================================\n");
 		printf("\n");
+
 		scanf("%d",&c1);
+
 		switch (c1)
 		{
 		case 1:
