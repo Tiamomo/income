@@ -1,7 +1,7 @@
 /*************************************************
 Copyright (CÓïÑÔ), 2018, Mango Tech. Co., Ltd.
  ÎÄ¼şÃû: ¹¤×Ê¹ÜÀí.c
- Author:ÃÉÊÀÂú(117583010128) Version:CÓïÑÔ&Ë«ÏòÁ´±í Date:3,7,2018 
+ Author:ÃÉÊÀÂú(117583010128) Version:CÓïÑÔ&Ë«ÏòÁ´±í Date:5,7,2018 
  Description: 
  I. Ö÷Òª¹¦ÄÜ:()
  ¶ÔÖ°Ô±µÄ¹¤×Ê½øĞĞÔöÉ¾¸Ä¼õ²éÑ¯µÄ²Ù×÷,²¢±£´æµ½Ö¸¶¨ÎÄ¼ş(gx.dat);
@@ -29,7 +29,6 @@ Copyright (CÓïÑÔ), 2018, Mango Tech. Co., Ltd.
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<sys/stat.h>
 typedef struct emp
 {
 	char num[10];    // ¹¤ºÅ
@@ -56,9 +55,7 @@ typedef struct emp
 
 }node;
 
-node zggz[50];
-
-unsigned int len = sizeof(node);//¼ÇÂ¼½á¹¹ÌåµÄ³¤¶È
+unsigned int len = sizeof(node);                         //¼ÇÂ¼½á¹¹ÌåµÄ³¤¶È
 
 int n=0;                                                 //È«¾Ö±äÁ¿£¬½øĞĞÎÄ¼ş¶ÁÈ¡Ê±¸öÊıµÄ¼ÇÂ¼
 
@@ -69,7 +66,7 @@ int n=0;                                                 //È«¾Ö±äÁ¿£¬½øĞĞÎÄ¼ş¶ÁÈ
  Called By: ÎŞ
  Table Accessed: ÎŞ
  Table Updated: ÎŞ
- Input: ´Ëº¯Êı´Óµ÷ÓÃ´¦»ñÈ¡Öµ "zggz[i].shouldz" ²¢¸³Öµ¸øĞÎ²Î (floatÀàĞÍ) ' v ',²¢¶¨Òå²ÎÊı (floatÀàĞÍ) ' ctax '±£´æ×îºó¼ÆËãµÄ¸öÈËËùµÃË° 
+ Input: ´Ëº¯Êı´Óµ÷ÓÃ´¦»ñÈ¡Öµ "shouldz" ²¢¸³Öµ¸øĞÎ²Î (floatÀàĞÍ) ' v ',²¢¶¨Òå²ÎÊı (floatÀàĞÍ) ' ctax '±£´æ×îºó¼ÆËãµÄ¸öÈËËùµÃË° 
  Output: ÎŞÊä³ö
  Return: ·µ»ØÖµÀàĞÍÎªfloatÀàĞÍµÄ"ctax".
  Others: ±¾º¯Êı¶ÔÓÚ¸ºÊıµÄÖµ,½«Ö±½Ó·µ»Ø0Öµ;
@@ -148,90 +145,6 @@ float grsds(float v)
 		return 0;
 }
 /*************************************************
- Function: create();
- Description: ½ÓÊÜÓÉÖ÷º¯Êı´«¹ıÀ´µÄ²ÎÊı£¬¸ù¾İĞèÇó´´½¨Ò»¸öË«ÏòÁ´±í£¬²¢·µ»Ø¸ÃÁ´±íµÄÍ·²¿£»
- Calls: ÎŞ
- Called By: ÎŞ
- Table Accessed: ÎŞ
- Table Updated: ÎŞ
- Input: ¸ù¾İÌáÊ¾ÒÀ´ÎÊäÈë¶ÔÓ¦½áµãµÄÊı¾İ
- Output: ÎŞ
- Return: ·µ»ØÖµÀàĞÍÎªnodeÀàĞÍµÄÖ¸Õë.
-*************************************************/ 
-node* create(int k)
-{
-    node *head,*cur,*prev;
-   
-    if ((head = (node *)malloc(len)) == NULL)
-    {
-		printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
-		
-		return NULL;
-    }
-   
-    head->num[0]='k';
-    head->name[0]='j';
-    head->jobz=0;
-    head->agesz=0;
-    head->dutyz=0;
-    head->perz=0;
-    head->shouldz=0;
-    head->tax=0;
-    head->realz=0;
-    head->prev=NULL;
-    head->next=NULL;//¶Ô´´½¨µÄ±íÍ·²¿½øĞĞ³õÊ¼»¯
-
-    prev = head;
-
-    for(k;k>=1;k--)
-    {
-		if ((cur = (node *)malloc(len)) == NULL)
-		{
-			printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
-			
-			return NULL;
-		}
-		prev->next=cur;
-		
-		printf("ÇëÊäÈëÔ±¹¤ĞÅÏ¢ \n");
-
-		printf("¹¤ºÅ:\n");
-		scanf("%s",cur->num);
-
-		printf("ĞÕÃû:\n");
-		scanf("%s",cur->name);
-
-		printf("¸ÚÎ»¹¤×Ê:\n");
-		scanf("%f",&cur->jobz);
-
-		printf("Ğ½¼¶¹¤×Ê:\n");
-		scanf("%f",&cur->agesz);
-
-		printf("Ö°Îñ½òÌù:\n");
-		scanf("%f",&cur->dutyz);
-
-		printf("¼¨Ğ§¹¤×Ê:\n");
-		scanf("%f",&cur->perz);
-
-		cur->shouldz = cur->jobz + cur->agesz + cur->dutyz + cur->perz;        //¼ÆËãÓ¦·¢¹¤×Ê
-
-		cur->tax = grsds(cur->shouldz);                                                 //¼ÆËãËùµÃË°
-
-		cur->realz = cur->shouldz - cur->tax;                                        //¼ÆËãÊµ·¢¹¤×Ê
-
-		cur->prev = prev;
-
-		cur->next = NULL;
-
-		prev = cur;
-   }
-   prev->next = head;
-
-   head->prev = prev;
-
-   return head;
-}
-/*************************************************
  Function: read();
  Description: Ê×ÏÈ´ÓÎÄ¼ş½øĞĞÈ¥È¡Êı¾İ´æµ½Êı×ézggzÀïÃæ£¬²¢Í¨¹ıÈ«¾Ö±äÁ¿n½øĞĞÈËÔ±µÄÊıµÄ¼ÇÂ¼¡£
  Calls: fopen()¡¢fclose();
@@ -248,86 +161,59 @@ node *read()
 
 	int i;
 
-	node *head,*cur,*prev;
+	node *head1,*cur,*prev;
 
 	if ((fp = fopen ("gx.dat","rb+")) == NULL)
 	{
 		printf("´ò¿ªÎÄ¼şÊ§°Ü£¡\n");
-		
+
 		exit(-1);
 	}
 	else
-		printf("\n");
-
-	while (!feof(fp))
 	{
-		fscanf(fp,"%s %s %f %f %f %f %f %f %f\n",zggz[n].num,zggz[n].name,&zggz[n].jobz,&zggz[n].agesz,&zggz[n].dutyz,&zggz[n].perz,&zggz[n].shouldz,&zggz[n].tax,&zggz[n].realz);//½«Êı¾İ´æÈëÊı×é 
-
-		n++;//¼ÇÂ¼ÈËÊı
-	}
-	if ((head = (node *)malloc(len))==NULL)
-	{
-		printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
-
-		exit(-1);
-	}
-	head->num[0]='k';
-	head->name[0]='j';
-	head->jobz=0;
-	head->agesz=0;
-	head->dutyz=0;
-	head->perz=0;
-	head->shouldz=0;
-	head->tax=0;
-	head->realz=0;
-	head->prev=NULL;
-	head->next=NULL;//¶Ô´´½¨µÄ±íÍ·²¿½øĞĞ³õÊ¼»¯
-
-	prev = head;
-
-	for(i = 0;i < n; i++)
-	{
-		if ((cur = (node *)malloc(len))==NULL)
+		while (!feof(fp))
 		{
-			printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
-			exit(-1);
+			if ((head1 = (node *)malloc(len)) == NULL)
+			{
+				printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
+
+				exit(-1);
+			}
+			else
+			{
+				head1->prev = NULL;
+
+				head1->next = NULL;              //¶Ô´´½¨µÄ±íÍ·²¿½øĞĞ³õÊ¼»¯
+
+				prev = head1;
+
+				if ((cur = (node *)malloc(len))==NULL)
+				{
+					printf("»ñÈ¡¿Õ¼äÊ§°Ü£¡£¡ÇëÖØÊÔ£¡\n");
+
+					exit(-1);
+				}
+				else
+				{
+					fscanf(fp,"%s %s %f %f %f %f %f %f %f\n",cur->num,cur->name,&cur->jobz,&cur->agesz,&cur->dutyz,&cur->perz,&cur->shouldz,&cur->tax,&cur->realz);
+
+					n++;                                               //¼ÇÂ¼ÈËÊı
+
+					cur->prev = prev;
+
+					cur->next = NULL;
+
+					prev = cur;
+				}
+			}
 		}
-		prev->next=cur;
+		prev->next = head1;
 
-		strcpy(cur->num,zggz[i].num);
-
-		strcpy(cur->name,zggz[i].name);
-
-		cur->jobz=zggz[i].jobz;
-
-		cur->agesz=zggz[i].agesz;
-
-		cur->dutyz=zggz[i].dutyz;
-
-		cur->perz=zggz[i].perz;
-
-		cur->shouldz=zggz[i].shouldz;
-
-		cur->tax=zggz[i].shouldz;
-
-		cur->realz=zggz[i].realz;
-
-		                                           //cur=cur->next;
-		cur->prev=prev;
-
-		cur->next=NULL;
-
-		prev=cur;
-		                                           // printf("¹¤ºÅ %s",cur->num);
+		head1->prev = cur;                                            //ÊµÏÖÊ×Î²ÏàÁ¬
 	}
-	prev->next = head;
+	fclose(fp);                                                      //¹Ø±ÕÎÄ¼ş
 
-	head->prev = cur;
-
-	                                             //printf("          ### Ä¿Ç°ÈËÊıÎª%d  ###\n",n);
-	fclose(fp);//¹Ø±ÕÎÄ¼ş
-
-	return head;
+	return head1;
 }
 /*************************************************
  Function: write();
@@ -415,7 +301,7 @@ void add(node *head,int k)
 			cur5 = cur5->next;
 		}
 
-	}
+	}                                                                         //ÅĞ¶ÏÊÇ·ñÓëÖ®Ç°µÄ¹¤ºÅÏàÍ¬
 
 	if (j == 101)
 	{
@@ -434,11 +320,11 @@ void add(node *head,int k)
 	     printf("¼¨Ğ§¹¤×Ê:\n");
 	     scanf("%f",&add->perz);
 
-	     add->shouldz = add->jobz + add->agesz + add->dutyz + add->perz;        //¼ÆËãÓ¦·¢¹¤×Ê
+	     add->shouldz = add->jobz + add->agesz + add->dutyz + add->perz;                //¼ÆËãÓ¦·¢¹¤×Ê
 	
-	     add->tax = grsds(add->shouldz);                                                 //¼ÆËãËùµÃË°
+	     add->tax = grsds(add->shouldz);                                                //¼ÆËãËùµÃË°
 	
-	     add->realz = add->shouldz - add->tax;                                        //¼ÆËãÊµ·¢¹¤×Ê
+	     add->realz = add->shouldz - add->tax;                                          //¼ÆËãÊµ·¢¹¤×Ê
 
 	     printf("ÒÔÏÂÎªÄúËùÊäÈëµÄĞÅÏ¢ \n");
 
@@ -462,11 +348,11 @@ void add(node *head,int k)
 
 	     head->prev->next=add;
 
-	     add->prev=head->prev;//ÊµÏÖÓëÎ²²¿½áµãµÄÁ¬½Ó
+	     add->prev=head->prev;                  //ÊµÏÖÓëÎ²²¿½áµãµÄÁ¬½Ó
 
 	     head->prev = add;
 
-	     add->next = head;//ÊµÏÖÓëheadÍ·²¿µÄÁ¬½Ó 
+	     add->next = head;                     //ÊµÏÖÓëheadÍ·²¿µÄÁ¬½Ó 
 
 	     printf("ÊÇ·ñ½«Êı¾İ±£´æµ½ÎÄ¼ş£¿1ÊÇ£¬0·ñ\n");
 
@@ -511,14 +397,14 @@ void del(node *head,int k)
 
     scanf("%s",gonghao);
 
-    for (i = 0;i < k; i++)
+    for (i = 1;i <= k; i++)
 	{
 		int c4;
 
 		if (strcmp(gonghao,cur4->num) == 0)
 		{
 			j = i;
-
+			printf("´ËÊ±j %d ",j);
 			printf("ÊÇ·ñÈ·ÈÏÉ¾³ı£¿1ÊÇ0·ñ\n");
 
 			scanf("%d",&c4);
@@ -526,13 +412,13 @@ void del(node *head,int k)
 			if (c4 == 1)
 			{
 				cur4->prev->next = cur4->next;
-
-				cur4->next->prev = cur4->prev;//cur3,cur4,cur5Àı×Ó
+				
+				cur4->next->prev = cur4->prev;              //cur3,cur4,cur5Àı×Ó
 
 				free(cur4);
 			}
 			
-			cur4 = cur4->next;
+			break;
 		}
 		else
 			cur4 = cur4->next;
@@ -583,6 +469,8 @@ void modify(node *head,int k)
 		if (strcmp(gonghao,cur3->num) == 0)
 		{
 			j = i;
+
+			break;
 		}
 		else
 			cur3 = cur3->next;
@@ -615,9 +503,11 @@ void modify(node *head,int k)
 		printf("¼¨Ğ§¹¤×Ê:\n");
 		scanf("%f",&cur3->perz);
 
-		cur3->shouldz = cur3->jobz+cur3->agesz+cur3->dutyz+cur3->perz;//¼ÆËãÓ¦·¢¹¤×Ê
-		cur3->tax = grsds(cur3->shouldz);                                   //¼ÆËãËùµÃË°
-		cur3->realz = cur3->shouldz - cur3->tax;                            //¼ÆËãÊµ·¢¹¤×Ê
+		cur3->shouldz = cur3->jobz+cur3->agesz+cur3->dutyz+cur3->perz;              //¼ÆËãÓ¦·¢¹¤×Ê
+
+		cur3->tax = grsds(cur3->shouldz);                                           //¼ÆËãËùµÃË°
+
+		cur3->realz = cur3->shouldz - cur3->tax;                                    //¼ÆËãÊµ·¢¹¤×Ê
 
 		printf("ÒÔÏÂÊÇÄúËùĞŞ¸ÄµÄĞÅÏ¢\n");
 
@@ -680,34 +570,36 @@ void find(node *head,int k)
 		{
 			printf("====Ò»ÏÂÊÇÄúËùÒª²éÕÒ³ÉÔ±µÄ¹¤ºÅĞÅÏ¢=====\n");
 
-			printf("¹¤ºÅ:\n");
-			printf("%s\n",cur2->num);
+			printf("===¹¤ºÅ:\n");
+			printf("\t%s\n",cur2->num);
 
-			printf("ĞÕÃû:\n");
-			printf("%s\n",cur2->name);
+			printf("===ĞÕÃû:\n");
+			printf("\t%s\n",cur2->name);
 
-			printf("¸ÚÎ»¹¤×Ê:\n");
-			printf("%.2f\n",cur2->jobz);
+			printf("===¸ÚÎ»¹¤×Ê:\n");
+			printf("\t%.2f\n",cur2->jobz);
 
-			printf("Ğ½¼¶¹¤×Ê:\n");
-			printf("%.2f\n",cur2->agesz);
+			printf("===Ğ½¼¶¹¤×Ê:\n");
+			printf("\t%.2f\n",cur2->agesz);
 
-			printf("Ö°Îñ½òÌù:\n");
-			printf("%.2f\n",cur2->dutyz);
+			printf("===Ö°Îñ½òÌù:\n");
+			printf("\t%.2f\n",cur2->dutyz);
 
-			printf("¼¨Ğ§¹¤×Ê:\n");
-			printf("%.2f\n",cur2->perz);
+			printf("===¼¨Ğ§¹¤×Ê:\n");
+			printf("\t%.2f\n",cur2->perz);
 
-			printf("Ó¦·¢¹¤×Ê:\n");
-			printf("%.2f\n",cur2->shouldz);
+			printf("===Ó¦·¢¹¤×Ê:\n");
+			printf("\t%.2f\n",cur2->shouldz);
 
-			printf("¸öÈËËùµÃË°:\n");
-			printf("%.2lf\n",cur2->tax);
+			printf("===¸öÈËËùµÃË°:\n");
+			printf("\t%.2lf\n",cur2->tax);
 
-			printf("Êµ·¢¹¤×Ê:\n");
-			printf("%.2lf\n",cur2->realz);
+			printf("===Êµ·¢¹¤×Ê:\n");
+			printf("\t%.2lf\n",cur2->realz);
 
-			j=i;
+			j = i;
+
+			break;
 		}
 		else
 			cur2 = cur2->next;	   
@@ -732,7 +624,7 @@ void list(node *head)
 {
 	node *cur1;
 
-	cur1 = head->next;//The first node
+	cur1 = head->next;                              //The first node
 
 	while (cur1 != head)
 	{
@@ -759,118 +651,60 @@ void list(node *head)
 *************************************************/
 int main()
 {
-	int c,k,c1;
+	int c1;
 
 	node *head;
 
 	printf("\n");
-	printf("                  ###   »¶Ó­Ê¹ÓÃ¹ãÎ÷Ãñ×å´óÑ§Èí¼şÓëĞÅÏ¢°²È«Ñ§ÔºÖ°¹¤¹¤×Ê¹ÜÀíÏµÍ³   ###\n",n);
+	printf("                  ###   »¶Ó­Ê¹ÓÃ¹ãÎ÷Ãñ×å´óÑ§Èí¼şÓëĞÅÏ¢°²È«Ñ§ÔºÖ°¹¤¹¤×Ê¹ÜÀíÏµÍ³   ###\n");
 	printf("\n");
-	printf("      =====ÊÇ·ñ´´½¨Á´±í½øĞĞÈËÔ±ÊäÈë£¬ÈôÈ·¶¨ÇëÊäÈë1ºóÊäÈëÏëÒªµÄ½áµã¸öÊı£¬·ñÔò½øĞĞÎÄ¼şµÄÉ¨Ãè¶ÁÈ¡Á´±í====\n");
 
-	scanf("%d",&c);
+	head=read();                                                                                            //»ñÈ¡Á´±í,²¢ÒÑ¾­¼ÇÂ¼ÈËÊın
 
-	if (c==1)
+	while (1)
 	{
-		printf("ÇëÊäÈëËùĞèÒªµÄÁ´±í´óĞ¡\n");
-
-		scanf("%d",&k);
-
-		head = create(k);
-
-		while (1)
+		printf("   ÒÑ¾­³É¹¦½«Êı¾İ»ñÈ¡,Çë¸ù¾İÒÔÏÂµÄÌáÊ¾ĞòºÅÊäÈëÄúËùĞèµÄ¹¦ÄÜ:         \n");
+		printf("                       ===================================================\n");
+		printf("                       |          1.²éÑ¯Ö°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
+		printf("                       |          2.ĞŞ¸ÄÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
+		printf("                       |          3.Ìí¼ÓÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
+		printf("                       |          4.É¾³ıÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
+		printf("                       |          5.±£´æÊı¾İµ½ÎÄ¼ş                        |\n");
+		printf("                       |          6.ä¯ÀÀÖ°¹¤¼ÇÂ¼                          |\n");
+		printf("                       |          7.ÍË³öÏµÍ³                              |\n");
+		printf("                       ===================================================\n");
+		printf("\n");
+		scanf("%d",&c1);
+		switch (c1)
 		{
-			printf("            ÒÑ¾­Íê³ÉÁ´±íµÄ´´½¨£¬Çë¸ù¾İÒÔÏÂµÄÌáÊ¾ĞòºÅÊäÈëÄúËùĞèµÄ¹¦ÄÜ:         \n");
+		case 1:
+			find(head,n);       //²éÑ¯
+			break;
 
-			printf("                       ===================================================\n");
-			printf("                       |          1.²éÑ¯Ö°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          2.ĞŞ¸ÄÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          3.Ìí¼ÓÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          4.É¾³ıÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          5.±£´æÊı¾İµ½ÎÄ¼ş                        |\n");
-			printf("                       |          6.ä¯ÀÀÖ°¹¤¼ÇÂ¼                          |\n");
-			printf("                       |          7.ÍË³ö²Ëµ¥,·µ»ØÉÏ¼¶²Ëµ¥                 |\n");
-			printf("                       ===================================================\n");
-			printf("\n");
+		case 2:
+			modify(head,n);     //ĞŞ¸Ä
+			break;
 
-			scanf("%d",&c1);
+		case 3:
+			add(head,n);        //Ôö¼Ó
+			break;
 
-			switch (c1)
-			{
-			case 1:
-				find(head,k);//²éÑ¯
-				break;
+		case 4:
+			del(head,n);	   //É¾³ı
+			break;
 
-			case 2:
-				modify(head,k); //ĞŞ¸Ä
-				break;
+		case 5:
+			write(head);	   //±£´æ
+			break;
 
-			case 3:
-				add(head,k);     //Ôö¼Ó
-				break;
+		case 6:
+			list(head);        //ä¯ÀÀ
+			break;
 
-			case 4:
-				del(head,k);	   //É¾³ı
-				break;
-			case 5:
-				write(head);	   //±£´æ
-				break;
+		case 7:
+			exit(-1);
+			break;
 
-			case 6:
-				list(head);         //ä¯ÀÀ
-				break;
-
-			case 7:
-				exit(-1);
-				break;
-
-			}		
-		}
-	}	      
-	else
-	{
-		head=read();//»ñÈ¡Á´±í
-
-		while (1)
-		{
-			printf("   ÒÑ¾­³É¹¦½«Êı¾İ»ñÈ¡,Çë¸ù¾İÒÔÏÂµÄÌáÊ¾ĞòºÅÊäÈëÄúËùĞèµÄ¹¦ÄÜ:         \n",n);
-			printf("                       ===================================================\n");
-			printf("                       |          1.²éÑ¯Ö°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          2.ĞŞ¸ÄÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          3.Ìí¼ÓÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          4.É¾³ıÖ°¹¤¹¤×Ê¼ÇÂ¼                      |\n");
-			printf("                       |          5.±£´æÊı¾İµ½ÎÄ¼ş                        |\n");
-			printf("                       |          6.ä¯ÀÀÖ°¹¤¼ÇÂ¼                          |\n");
-			printf("                       |          7.ÍË³öÏµÍ³                              |\n");
-			printf("                       ===================================================\n");
-			printf("\n");
-
-			scanf("%d",&c1);
-
-			switch (c1)
-			{
-			case 1:
-				find(head,n);//²éÑ¯
-				break;
-			case 2:
-				modify(head,n); //ĞŞ¸Ä
-				break;
-			case 3:
-				add(head,n);     //Ôö¼Ó
-				break;
-			case 4:
-				del(head,n);	   //É¾³ı
-				break;
-			case 5:
-				write(head);	   //±£´æ
-				break;
-			case 6:
-				list(head);
-				break;
-			case 7:
-				exit(-1);
-				break;		//ä¯ÀÀ
-			}
 		}
 	}
 	return 0;
